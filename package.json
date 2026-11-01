@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "wrangler deploy --assets=./out",
+    "pages:build": "next build",
     "start": "next start",
     "lint": "next lint",
     "test:validation": "node scripts/test-validation.cjs"

@@ -9,30 +9,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          50: "#f0f4f8",
-          100: "#d9e2ec",
-          200: "#bcccdc",
-          300: "#9fb3c8",
-          400: "#829ab1",
-          500: "#627d98",
-          600: "#486581",
-          700: "#334e68",
-          800: "#1e293b",
-          900: "#0f172a",
-          950: "#020617",
-        },
-        license: {
-          blue: "#2563eb",
-          "blue-dark": "#1d4ed8",
-          "blue-navy": "#1e3a8a",
-          "blue-light": "#eff6ff",
-          emerald: "#059669",
-          "emerald-light": "#ecfdf5",
-          red: "#e11d48",
-          "red-light": "#fff1f2",
-          amber: "#d97706",
-          "amber-light": "#fffbeb",
+        brand: {
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb", // Primary
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
         },
       },
       fontFamily: {
@@ -55,10 +42,9 @@ const config: Config = {
         ],
       },
       boxShadow: {
-        subtle: "0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)",
-        card: "0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
-        hover: "0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.04)",
-        elevated: "0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.04)",
+        subtle: "0 1px 2px 0 rgb(0 0 0 / 0.04)",
+        card: "0 1px 3px 0 rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.04)",
+        hover: "0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05)",
       },
     },
   },

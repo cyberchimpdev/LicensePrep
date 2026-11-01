@@ -7,24 +7,30 @@
     --font-inter: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
 
-  body {
-    @apply bg-slate-50/90 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Improve rendering and line-height for Devanagari text so accents/matras don't get clipped */
+  body {
+    @apply bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900;
+  }
+
+  /* Refined typography for Devanagari (Nepali) */
   .font-devanagari, [lang="ne"] {
-    line-height: 1.7;
+    line-height: 1.75;
+    letter-spacing: 0.01em;
   }
 }
 
-/* Custom scrollbars for category tabs, navigation & lists */
+/* Subtle, minimal scrollbars */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
@@ -34,7 +40,7 @@
   background: #94a3b8;
 }
 
-/* Accessibility focus ring */
+/* Accessible focus ring */
 :focus-visible {
   outline: 2px solid #2563eb;
   outline-offset: 2px;

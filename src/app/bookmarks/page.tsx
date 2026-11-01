@@ -5,10 +5,9 @@ import Link from "next/link";
 import { PageContainer } from "@/components/layout/PageContainer";
 import { useUserProgress } from "@/hooks/useUserProgress";
 import { getAllQuestions } from "@/lib/question-parser";
-import { Question } from "@/types/question";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
-import { Bookmark, BookOpen, Trash2, ArrowRight, HelpCircle, CheckCircle } from "lucide-react";
+import { Bookmark, BookOpen, Trash2, ArrowRight, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function BookmarksPage() {
@@ -43,19 +42,19 @@ export default function BookmarksPage() {
   return (
     <PageContainer size="narrow" className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-8 space-y-4">
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-7 space-y-4 font-devanagari">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
-              <span className="p-2.5 rounded-2xl bg-amber-50 text-amber-600 shadow-sm">
-                <Bookmark className="w-6 h-6 fill-current" />
+              <span className="p-2.5 rounded-xl bg-amber-50 text-amber-600">
+                <Bookmark className="w-5 h-5 fill-current" />
               </span>
               <div>
-                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                  Bookmarked Questions (सुरक्षित प्रश्नहरू)
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
+                  सुरक्षित प्रश्नहरू (Bookmarked Questions)
                 </h1>
-                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                  Questions you have flagged for revision and dedicated practice.
+                <p className="text-xs text-slate-500 mt-0.5">
+                  तपाईंले थप अभ्यास वा दोहोर्‍याउनका लागि सुरक्षित गर्नुभएका प्रश्नहरू।
                 </p>
               </div>
             </div>
@@ -63,9 +62,9 @@ export default function BookmarksPage() {
 
           {bookmarkedQuestions.length > 0 && (
             <Link href="/practice?filter=bookmarked">
-              <Button variant="primary" size="md" className="gap-2 bg-navy-900 hover:bg-navy-800 rounded-xl font-bold shadow-md">
+              <Button variant="primary" size="sm" className="gap-2 rounded-xl font-semibold">
                 <BookOpen className="w-4 h-4" />
-                <span>Practice All Saved ({progress.bookmarks.length})</span>
+                <span>सबै अभ्यास गर्नुहोस् ({progress.bookmarks.length})</span>
               </Button>
             </Link>
           )}
@@ -74,27 +73,27 @@ export default function BookmarksPage() {
         {/* Section Filter Pills */}
         {uniqueSections.length > 1 && (
           <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500 font-bold">Filter Category:</span>
+            <span className="text-xs text-slate-500 font-medium">विषय छनोट:</span>
             <button
               onClick={() => setSelectedSection("all")}
               className={cn(
-                "px-3 py-1.5 rounded-xl text-xs font-bold transition-all",
+                "px-3 py-1 rounded-xl text-xs font-semibold transition-all border",
                 selectedSection === "all"
-                  ? "bg-navy-900 text-white shadow-sm"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                  : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
               )}
             >
-              All ({progress.bookmarks.length})
+              सबै ({progress.bookmarks.length})
             </button>
             {uniqueSections.map((sec) => (
               <button
                 key={sec}
                 onClick={() => setSelectedSection(sec)}
                 className={cn(
-                  "px-3 py-1.5 rounded-xl text-xs font-bold transition-all",
+                  "px-3 py-1 rounded-xl text-xs font-semibold transition-all border",
                   selectedSection === sec
-                    ? "bg-navy-900 text-white shadow-sm"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    ? "bg-blue-600 text-white border-blue-600 shadow-sm"
+                    : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100"
                 )}
               >
                 {sec}
@@ -106,20 +105,20 @@ export default function BookmarksPage() {
 
       {/* Bookmarks List or Empty State */}
       {bookmarkedQuestions.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-200 p-12 sm:p-16 text-center shadow-card space-y-4">
-          <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-500 mx-auto flex items-center justify-center shadow-inner">
-            <Bookmark className="w-8 h-8" />
+        <div className="bg-white rounded-2xl border border-slate-200 p-10 sm:p-14 text-center shadow-sm space-y-3 font-devanagari">
+          <div className="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 mx-auto flex items-center justify-center">
+            <Bookmark className="w-6 h-6" />
           </div>
-          <h3 className="text-xl font-extrabold text-slate-900">
-            No Bookmarked Questions Yet
+          <h3 className="text-lg font-bold text-slate-900">
+            कुनै प्रश्न सुरक्षित गरिएको छैन
           </h3>
-          <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
-            While practicing or browsing the question bank, click the bookmark icon on any tricky questions to save them for revision.
+          <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+            अभ्यास गर्दा वा प्रश्न बैंक हेर्दा कुनै पनि महत्त्वपूर्ण वा गाह्रो प्रश्नमा रहेको बुकमार्क आइकन थिचेर यहाँ सुरक्षित गर्न सक्नुहुन्छ।
           </p>
           <div className="pt-2">
-            <Link href="/practice">
-              <Button variant="primary" size="md" className="rounded-xl font-bold bg-navy-900 hover:bg-navy-800">
-                Start Practicing Questions
+            <Link href="/questions">
+              <Button variant="primary" size="sm" className="rounded-xl font-semibold">
+                महत्त्वपूर्ण प्रश्नहरू हेर्नुहोस्
               </Button>
             </Link>
           </div>
@@ -129,11 +128,11 @@ export default function BookmarksPage() {
           {bookmarkedQuestions.map((q) => (
             <div
               key={q.id}
-              className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-5 sm:p-7 space-y-4 hover:border-amber-200 transition-all"
+              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4 hover:border-slate-300 transition-all font-devanagari"
             >
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-extrabold text-xs px-3 py-1 rounded-xl bg-navy-900 text-white shadow-sm">
+                  <span className="font-bold text-xs px-2.5 py-0.5 rounded-lg bg-blue-600 text-white">
                     प्रश्न नं. {q.number}
                   </span>
                   <Badge variant="default" size="sm">
@@ -144,23 +143,23 @@ export default function BookmarksPage() {
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/practice?question=${q.number}`}
-                    className="p-1.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    className="p-1.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors"
                   >
-                    <span>Practice</span>
+                    <span>अभ्यास गर्नुहोस्</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
                   <button
                     onClick={() => toggleBookmark(q.number)}
-                    className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
-                    title="Remove from bookmarks"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
+                    title="बुकमार्कबाट हटाउनुहोस्"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
               </div>
 
-              <div className="text-base sm:text-xl font-bold text-slate-900 leading-relaxed font-devanagari">
+              <div className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
                 {q.question}
               </div>
 
@@ -172,15 +171,15 @@ export default function BookmarksPage() {
                     <div
                       key={opt.key}
                       className={cn(
-                        "p-3 rounded-2xl border text-xs sm:text-sm flex items-start gap-3 transition-all",
+                        "p-3 rounded-xl border text-xs sm:text-sm flex items-start gap-2.5 transition-all",
                         isCorrect
-                          ? "border-emerald-400 bg-emerald-50 text-emerald-950 font-bold ring-1 ring-emerald-300"
-                          : "border-slate-200/80 bg-slate-50/50 text-slate-700 font-medium"
+                          ? "border-emerald-500 bg-emerald-50 text-emerald-950 font-semibold ring-1 ring-emerald-400/30"
+                          : "border-slate-200 bg-slate-50/60 text-slate-800 font-medium"
                       )}
                     >
                       <div
                         className={cn(
-                          "w-6 h-6 rounded-lg font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5",
+                          "w-6 h-6 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 mt-0.5",
                           isCorrect
                             ? "bg-emerald-600 text-white"
                             : "bg-slate-200 text-slate-700"
@@ -188,13 +187,18 @@ export default function BookmarksPage() {
                       >
                         {opt.key}
                       </div>
-                      <div className="flex-1 leading-snug font-devanagari">{opt.text}</div>
+                      <div className="flex-1 leading-relaxed">{opt.text}</div>
                       {isCorrect && (
-                        <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                       )}
                     </div>
                   );
                 })}
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 text-xs text-emerald-900 font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                <span>आधिकारिक सही उत्तर: ({q.correctAnswerKey}) {q.correctAnswerText}</span>
               </div>
             </div>
           ))}
