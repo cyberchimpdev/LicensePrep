@@ -7,6 +7,7 @@ import { OptionList } from "./OptionList";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { checkPracticeAnswer } from "@/lib/answer-checker";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface QuestionCardProps {
   question: Question;
@@ -23,6 +24,8 @@ export function QuestionCard({
   onAnswerSubmitted,
   savedAnswer,
 }: QuestionCardProps) {
+  const { language, t, translateCategory } = useLanguage();
+
   const [selectedKey, setSelectedKey] = useState<string | undefined>(
     savedAnswer?.answeredKey
   );
@@ -113,25 +116,25 @@ export function QuestionCard({
   }, [isSubmitted, selectedKey, question.options, handleSubmit]);
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-7 space-y-5 transition-all">
+    <div className="liquid-glass-card rounded-2xl p-5 sm:p-7 space-y-5 transition-all font-devanagari">
       {/* Header Info */}
       <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white font-bold text-xs sm:text-sm tracking-wide">
-            प्रश्न नं. {question.number}
+            {language === "ne" ? `प्रश्न नं. ${question.number}` : `Question #${question.number}`}
           </span>
-          <Badge variant="info">{question.section}</Badge>
+          <Badge variant="info">{translateCategory(question.section)}</Badge>
           <span className="text-[11px] text-slate-400 font-medium">
-            पृष्ठ {question.sourcePage}
+            {language === "ne" ? `पृष्ठ ${question.sourcePage}` : `Page ${question.sourcePage}`}
           </span>
         </div>
 
         <button
           onClick={() => onToggleBookmark(question.number)}
-          className={`p-1.5 rounded-lg transition-all flex items-center gap-1.5 text-xs font-semibold ${
+          className={`p-1.5 rounded-xl transition-all flex items-center gap-1.5 text-xs font-semibold ${
             isBookmarked
               ? "bg-amber-50 text-amber-700 hover:bg-amber-100 ring-1 ring-amber-300"
-              : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+              : "liquid-glass-pill text-slate-400 hover:text-slate-700"
           }`}
           title={isBookmarked ? "Remove Bookmark" : "Save Question"}
         >
@@ -139,7 +142,9 @@ export function QuestionCard({
             className={`w-4 h-4 ${isBookmarked ? "fill-current text-amber-500" : ""}`}
           />
           <span className="hidden sm:inline font-devanagari">
-            {isBookmarked ? "सुरक्षित छ" : "सुरक्षित राख्नुहोस्"}
+            {isBookmarked
+              ? (language === "ne" ? "सुरक्षित छ" : "Saved")
+              : (language === "ne" ? "सुरक्षित राख्नुहोस्" : "Save")}
           </span>
         </button>
       </div>
@@ -174,16 +179,16 @@ export function QuestionCard({
         {!isSubmitted ? (
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <span className="text-xs text-slate-400 hidden sm:inline flex items-center gap-1 font-devanagari">
-              <span>सुझाव: विकल्प रोज्न 1, 2, 3, 4 वा क्लिक गर्नुहोस्।</span>
+              <span>{language === "ne" ? "सुझाव: विकल्प रोज्न 1, 2, 3, 4 वा क्लिक गर्नुहोस्।" : "Tip: Press 1, 2, 3, 4 or click to select."}</span>
             </span>
             <Button
               variant="primary"
               size="md"
               onClick={handleSubmit}
               disabled={!selectedKey || !question.isValidForExam}
-              className="w-full sm:w-auto px-6 font-semibold rounded-xl gap-2 font-devanagari"
+              className="w-full sm:w-auto px-6 font-semibold rounded-xl gap-2 font-devanagari bg-blue-600 hover:bg-blue-700 text-white"
             >
-              <span>उत्तर बुझाउनुहोस् (Submit)</span>
+              <span>{t.submitAnswerBtn}</span>
               <CornerDownLeft className="w-4 h-4 hidden sm:inline opacity-70" />
             </Button>
           </div>
@@ -194,9 +199,9 @@ export function QuestionCard({
               <div className="p-3.5 sm:p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3 text-emerald-950 font-devanagari">
                 <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="font-bold text-sm sm:text-base">बधाई छ! तपाईंको उत्तर सही छ।</h4>
+                  <h4 className="font-bold text-sm sm:text-base">{t.correctFeedback}</h4>
                   <p className="text-xs sm:text-sm text-emerald-900 mt-0.5">
-                    सही उत्तर विकल्प: <strong>({question.correctAnswerKey}) {question.correctAnswerText}</strong>
+                    {language === "ne" ? "सही उत्तर विकल्प:" : "Correct Option:"} <strong>({question.correctAnswerKey}) {question.correctAnswerText}</strong>
                   </p>
                 </div>
               </div>
@@ -204,9 +209,9 @@ export function QuestionCard({
               <div className="p-3.5 sm:p-4 bg-rose-50 border border-rose-200 rounded-xl flex items-start gap-3 text-rose-950 font-devanagari">
                 <XCircle className="w-5 h-5 text-rose-600 shrink-0 mt-0.5" />
                 <div className="flex-1">
-                  <h4 className="font-bold text-sm sm:text-base">गलत उत्तर!</h4>
+                  <h4 className="font-bold text-sm sm:text-base">{t.incorrectFeedback}</h4>
                   <p className="text-xs sm:text-sm text-rose-900 mt-0.5">
-                    सही उत्तर विकल्प: <strong>({question.correctAnswerKey}) {question.correctAnswerText}</strong> हो।
+                    {language === "ne" ? "सही उत्तर विकल्प:" : "Correct Option:"} <strong>({question.correctAnswerKey}) {question.correctAnswerText}</strong>
                   </p>
                 </div>
               </div>
@@ -217,7 +222,7 @@ export function QuestionCard({
               <div className="p-3.5 bg-slate-50 border border-slate-200 rounded-xl text-slate-700 text-xs sm:text-sm space-y-1 font-devanagari">
                 <div className="flex items-center gap-1.5 font-bold text-slate-900">
                   <HelpCircle className="w-4 h-4 text-blue-600" />
-                  <span>थप व्याख्या (Explanation):</span>
+                  <span>{t.explanationLabel}</span>
                 </div>
                 <p className="leading-relaxed">{question.explanation}</p>
               </div>
@@ -232,7 +237,7 @@ export function QuestionCard({
                 className="gap-1.5 rounded-xl text-xs font-semibold font-devanagari"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>पुनः प्रयास गर्नुहोस् (Retry)</span>
+                <span>{t.retryBtn}</span>
               </Button>
             </div>
           </div>

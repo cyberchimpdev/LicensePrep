@@ -7,6 +7,7 @@ import { getAllQuestions, getSections, searchQuestions } from "@/lib/question-pa
 import { useUserProgress } from "@/hooks/useUserProgress";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Search,
   Eye,
@@ -41,6 +42,7 @@ const POPULAR_SEARCH_TAGS = [
 
 export default function ImportantQuestionsPage() {
   const { progress, toggleBookmark, isBookmarked } = useUserProgress();
+  const { language, t, translateCategory, translateKey } = useLanguage();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedSection, setSelectedSection] = useState("all");
@@ -106,19 +108,19 @@ export default function ImportantQuestionsPage() {
 
   return (
     <PageContainer size="wide" className="space-y-6">
-      {/* nepallicense.com inspired Header Box */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 space-y-5 shadow-sm">
+      {/* Liquid Glass Header Box */}
+      <div className="liquid-glass-card rounded-2xl p-5 sm:p-7 space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-pill text-blue-700 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              <span>वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) - ५०० वस्तुगत प्रश्नोत्तर</span>
+              <span>{language === "ne" ? "वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) - ५०० वस्तुगत प्रश्नोत्तर" : "DOTM Category A & K — Official 500 Question Bank"}</span>
             </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight font-devanagari">
-              महत्त्वपूर्ण प्रश्नोत्तर (Important Questions with Answers)
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight font-devanagari">
+              {t.bankTitle}
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 font-devanagari max-w-2xl">
-              यातायात व्यवस्था विभाग (DOTM) को आधिकारिक पाठ्यक्रममा आधारित ५०० प्रश्नोत्तरहरू। यहाँबाट सम्पूर्ण प्रश्नहरूको अध्ययन गर्नुहोस् र उत्तर जाँच गर्नुहोस्।
+              {t.bankSubtitle}
             </p>
           </div>
 
@@ -128,10 +130,10 @@ export default function ImportantQuestionsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-1.5 font-semibold text-xs rounded-xl border-zinc-200"
+                className="gap-1.5 font-semibold text-xs rounded-xl liquid-glass-pill text-blue-700"
               >
                 <Shuffle className="w-3.5 h-3.5 text-blue-600" />
-                <span>अनियमित २० प्रश्न अभ्यास (Random Practice)</span>
+                <span>{language === "ne" ? "अनियमित २० प्रश्न अभ्यास" : "Random 20 Qs Practice"}</span>
               </Button>
             </Link>
 
@@ -147,19 +149,19 @@ export default function ImportantQuestionsPage() {
               {showAllAnswers ? (
                 <>
                   <EyeOff className="w-4 h-4" />
-                  <span>उत्तर लुकाउनुहोस् (Hide Answers)</span>
+                  <span>{t.hideAnswers}</span>
                 </>
               ) : (
                 <>
                   <Eye className="w-4 h-4" />
-                  <span>सबै उत्तर देखाउनुहोस् (Show All)</span>
+                  <span>{t.showAllAnswers}</span>
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        {/* Category Tabs (Horizontally scrollable like nepallicense.com) */}
+        {/* Category Tabs (Horizontally scrollable with Liquid Glass pills) */}
         <div className="pt-2 border-t border-slate-100">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
             <button
@@ -171,10 +173,10 @@ export default function ImportantQuestionsPage() {
                 "whitespace-nowrap px-3.5 py-1.5 rounded-xl font-semibold transition-all border shrink-0 font-devanagari",
                 selectedSection === "all"
                   ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                  : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300"
+                  : "liquid-glass-pill text-slate-700 hover:bg-slate-100"
               )}
             >
-              सबै प्रश्नहरू ({allQuestions.length})
+              {language === "ne" ? "सबै प्रश्नहरू" : "All Questions"} ({allQuestions.length})
             </button>
             {sections.map((sec) => {
               const isSelected = selectedSection === sec.name;
@@ -189,10 +191,10 @@ export default function ImportantQuestionsPage() {
                     "whitespace-nowrap px-3 py-1.5 rounded-xl font-medium transition-all border shrink-0 flex items-center gap-1.5 font-devanagari",
                     isSelected
                       ? "bg-blue-600 text-white border-blue-600 shadow-sm font-semibold"
-                      : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300"
+                      : "liquid-glass-pill text-slate-700 hover:bg-slate-100"
                   )}
                 >
-                  <span>{sec.name}</span>
+                  <span>{translateCategory(sec.name)}</span>
                   <span
                     className={cn(
                       "text-[10px] px-1.5 py-0.5 rounded-full font-bold",
@@ -221,8 +223,8 @@ export default function ImportantQuestionsPage() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="नेपाली वा अंग्रेजीमा खोज्नुहोस् (उदा. जेब्रा क्रस, बत्ती, helmet...)"
-              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
+              placeholder={t.searchPlaceholder}
+              className="w-full text-xs sm:text-sm font-medium bg-white/80 border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
             />
             {searchQuery && (
               <button
@@ -242,25 +244,25 @@ export default function ImportantQuestionsPage() {
                 setStatusFilter(e.target.value as any);
                 setCurrentPage(1);
               }}
-              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
+              className="w-full text-xs sm:text-sm font-medium bg-white/80 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
             >
-              <option value="all">सबै प्रश्नहरू (All Status)</option>
-              <option value="attempted">अभ्यास गरिएका (Practiced)</option>
-              <option value="unattempted">बाँकी प्रश्नहरू (Unpracticed)</option>
-              <option value="bookmarked">सुरक्षित (Bookmarked)</option>
+              <option value="all">{language === "ne" ? "सबै प्रश्नहरू (All Status)" : "All Status"}</option>
+              <option value="attempted">{language === "ne" ? "अभ्यास गरिएका (Practiced)" : "Practiced"}</option>
+              <option value="unattempted">{language === "ne" ? "बाँकी प्रश्नहरू (Unpracticed)" : "Unpracticed"}</option>
+              <option value="bookmarked">{language === "ne" ? "सुरक्षित (Bookmarked)" : "Bookmarked"}</option>
             </select>
           </div>
 
           {/* Items per page */}
           <div className="md:col-span-2 flex items-center justify-end gap-1.5 text-xs text-slate-500">
-            <span>प्रति पृष्ठ:</span>
+            <span>{language === "ne" ? "प्रति पृष्ठ:" : "Show:"}</span>
             <select
               value={itemsPerPage}
               onChange={(e) => {
                 setItemsPerPage(parseInt(e.target.value, 10));
                 setCurrentPage(1);
               }}
-              className="bg-slate-50 border border-slate-200 rounded-xl px-2 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-white/80 border border-slate-200 rounded-xl px-2 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {ITEMS_PER_PAGE_OPTIONS.map((opt) => (
                 <option key={opt} value={opt}>
@@ -274,7 +276,7 @@ export default function ImportantQuestionsPage() {
         {/* Quick Suggestion Pills */}
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
           <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1 mr-1">
-            प्रमुख विषय:
+            {language === "ne" ? "प्रमुख विषय:" : "Hot Topics:"}
           </span>
           {POPULAR_SEARCH_TAGS.map((tag) => (
             <button
@@ -284,7 +286,7 @@ export default function ImportantQuestionsPage() {
                 setSearchQuery(keyword);
                 setCurrentPage(1);
               }}
-              className="px-2.5 py-0.5 rounded-lg text-xs font-medium bg-slate-100 hover:bg-blue-50 hover:text-blue-700 text-slate-600 transition-colors font-devanagari"
+              className="px-2.5 py-0.5 rounded-lg text-xs font-medium liquid-glass-pill hover:text-blue-700 text-slate-600 transition-colors font-devanagari"
             >
               {tag}
             </button>
@@ -294,13 +296,15 @@ export default function ImportantQuestionsPage() {
         {/* Count Bar */}
         <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
           <span>
-            कुल <strong>{filteredQuestions.length}</strong> प्रश्नहरू मध्ये (पृष्ठ {validCurrentPage} / {totalPages})
-            {searchQuery && ` — "${searchQuery}" को नतिजा`}
+            {language === "ne"
+              ? `कुल ${filteredQuestions.length} प्रश्नहरू मध्ये (पृष्ठ ${validCurrentPage} / ${totalPages})`
+              : `Showing ${filteredQuestions.length} questions (Page ${validCurrentPage} of ${totalPages})`}
+            {searchQuery && ` — "${searchQuery}"`}
           </span>
         </div>
       </div>
 
-      {/* Questions List (Matching nepallicense.com clean layout) */}
+      {/* Questions List */}
       <div className="space-y-4">
         {paginatedQuestions.map((q) => {
           const isQBookmarked = isBookmarked(q.number);
@@ -317,16 +321,16 @@ export default function ImportantQuestionsPage() {
           return (
             <div
               key={q.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4 hover:border-slate-300 transition-all"
+              className="liquid-glass-card rounded-2xl p-5 sm:p-6 space-y-4 transition-all"
             >
               {/* Question Header */}
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white font-bold text-xs tracking-wide">
-                    प्रश्न नं. {q.number}
+                    {language === "ne" ? `प्रश्न नं. ${q.number}` : `Q# ${q.number}`}
                   </span>
-                  <span className="text-xs text-slate-600 font-medium bg-slate-100 px-2 py-0.5 rounded-lg font-devanagari">
-                    {q.section}
+                  <span className="text-xs text-slate-600 font-medium liquid-glass-pill px-2 py-0.5 rounded-lg font-devanagari">
+                    {translateCategory(q.section)}
                   </span>
 
                   {userAttempt && (
@@ -338,7 +342,7 @@ export default function ImportantQuestionsPage() {
                           : "bg-rose-50 text-rose-700 border border-rose-200"
                       )}
                     >
-                      {userAttempt.isCorrect ? "पहिले सही गरिएको" : "पहिले गलत भएको"}
+                      {userAttempt.isCorrect ? (language === "ne" ? "पहिले सही गरिएको" : "Solved Correctly") : (language === "ne" ? "पहिले गलत भएको" : "Solved Incorrectly")}
                     </span>
                   )}
                 </div>
@@ -347,19 +351,19 @@ export default function ImportantQuestionsPage() {
                   <button
                     onClick={() => toggleBookmark(q.number)}
                     className={cn(
-                      "p-1.5 rounded-lg transition-all",
+                      "p-1.5 rounded-xl transition-all",
                       isQBookmarked
                         ? "text-amber-600 bg-amber-50 ring-1 ring-amber-300"
-                        : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
+                        : "liquid-glass-pill text-slate-400 hover:text-slate-700"
                     )}
-                    title={isQBookmarked ? "सुरक्षित सूचीबाट हटाउनुहोस्" : "प्रश्न सुरक्षित राख्नुहोस्"}
+                    title={isQBookmarked ? "Remove bookmark" : "Save question"}
                   >
                     <Bookmark className={cn("w-4 h-4", isQBookmarked ? "fill-current text-amber-500" : "")} />
                   </button>
                 </div>
               </div>
 
-              {/* Edge Case Note (e.g. Q290) */}
+              {/* Edge Case Note */}
               {q.isNote && (
                 <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-950 flex items-start gap-2 font-devanagari">
                   <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
@@ -379,10 +383,11 @@ export default function ImportantQuestionsPage() {
                     const isCorrect = isAnswerRevealed && opt.key === q.correctAnswerKey;
                     const isUserChoice = userSelectedOptionKey === opt.key;
                     const isUserWrong = isAnswerRevealed && isUserChoice && !isCorrect;
+                    const keyDisplay = language === "en" ? `${translateKey(opt.key)} (${opt.key})` : opt.key;
 
                     let cardClass =
-                      "border-slate-200 bg-slate-50/70 hover:bg-blue-50/30 hover:border-blue-300 text-slate-800";
-                    let badgeClass = "bg-slate-200 text-slate-700";
+                      "border-slate-200 bg-white/80 hover:bg-white hover:border-slate-300 text-slate-800";
+                    let badgeClass = "bg-slate-100 text-slate-700";
 
                     if (isCorrect) {
                       cardClass =
@@ -405,11 +410,11 @@ export default function ImportantQuestionsPage() {
                       >
                         <div
                           className={cn(
-                            "w-6 h-6 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 transition-colors",
+                            "min-w-6 h-6 px-1 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 mt-0.5 transition-colors",
                             badgeClass
                           )}
                         >
-                          {opt.key}
+                          {keyDisplay}
                         </div>
                         <div className="flex-1 leading-relaxed font-devanagari font-medium text-slate-900">
                           {opt.text}
@@ -425,13 +430,13 @@ export default function ImportantQuestionsPage() {
                 </div>
               ) : null}
 
-              {/* Answer Callout (Clean nepallicense.com style answer box) */}
+              {/* Answer Callout */}
               <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 {isAnswerRevealed ? (
                   <div className="p-2.5 px-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs sm:text-sm text-emerald-950 font-devanagari flex-1">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>
-                      आधिकारिक सही उत्तर: विकल्प <strong>({q.correctAnswerKey}) {q.correctAnswerText || "(स्रोत बमोजिम)"}</strong>
+                      {t.officialAnswer} विकल्प <strong>({language === "en" ? `${translateKey(q.correctAnswerKey)} / ${q.correctAnswerKey}` : q.correctAnswerKey}) {q.correctAnswerText || "(स्रोत बमोजिम)"}</strong>
                     </span>
                   </div>
                 ) : (
@@ -440,7 +445,7 @@ export default function ImportantQuestionsPage() {
                     className="p-2 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors self-start font-devanagari"
                   >
                     <Eye className="w-3.5 h-3.5 text-blue-600" />
-                    <span>उत्तर हेर्नुहोस् (Show Answer)</span>
+                    <span>{t.showAnswerBtn}</span>
                   </button>
                 )}
 
@@ -450,14 +455,14 @@ export default function ImportantQuestionsPage() {
                       onClick={() => toggleSingleAnswer(q.number)}
                       className="text-xs text-slate-400 hover:text-slate-600 font-medium px-2 py-1 font-devanagari"
                     >
-                      लुकाउनुहोस्
+                      {language === "ne" ? "लुकाउनुहोस्" : "Hide"}
                     </button>
                   )}
                   <Link
                     href={`/practice?question=${q.number}`}
                     className="p-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors font-devanagari"
                   >
-                    <span>अभ्यास गर्नुहोस्</span>
+                    <span>{language === "ne" ? "अभ्यास गर्नुहोस्" : "Practice This"}</span>
                     <ArrowRight className="w-3 h-3 text-blue-600" />
                   </Link>
                 </div>
@@ -468,11 +473,15 @@ export default function ImportantQuestionsPage() {
 
         {/* Empty Search Result */}
         {filteredQuestions.length === 0 && (
-          <div className="p-12 bg-white rounded-2xl border border-slate-200 text-center space-y-3 shadow-sm font-devanagari">
+          <div className="p-12 liquid-glass-card rounded-2xl text-center space-y-3 font-devanagari">
             <HelpCircle className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="text-base font-bold text-slate-800">कुनै प्रश्न भेटिएन</h3>
+            <h3 className="text-base font-bold text-slate-800">
+              {language === "ne" ? "कुनै प्रश्न भेटिएन" : "No Questions Found"}
+            </h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
-              तपाईंले खोज्नुभएको &quot;{searchQuery}&quot; अनुसार कुनै प्रश्न फेला परेन। कृपया अर्को शब्द खोज्नुहोस् वा फिल्टर रिसेट गर्नुहोस्।
+              {language === "ne"
+                ? `तपाईंले खोज्नुभएको "${searchQuery}" अनुसार कुनै प्रश्न फेला परेन। कृपया अर्को शब्द खोज्नुहोस् वा फिल्टर रिसेट गर्नुहोस्।`
+                : `No questions match your query "${searchQuery}". Try different keywords or clear filters.`}
             </p>
             <Button
               variant="outline"
@@ -484,7 +493,7 @@ export default function ImportantQuestionsPage() {
               }}
               className="rounded-xl font-semibold text-xs"
             >
-              फिल्टर रिसेट गर्नुहोस्
+              {language === "ne" ? "फिल्टर रिसेट गर्नुहोस्" : "Reset Filters"}
             </Button>
           </div>
         )}
@@ -492,7 +501,7 @@ export default function ImportantQuestionsPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-3.5 flex items-center justify-between gap-4 font-devanagari">
+        <div className="liquid-glass-card rounded-2xl p-3.5 flex items-center justify-between gap-4 font-devanagari">
           <Button
             variant="outline"
             size="sm"
@@ -501,11 +510,11 @@ export default function ImportantQuestionsPage() {
             className="gap-1.5 rounded-xl text-xs font-semibold"
           >
             <ChevronLeft className="w-4 h-4" />
-            <span>अघिल्लो (Previous)</span>
+            <span>{t.previousBtn}</span>
           </Button>
 
           <div className="text-xs font-semibold text-slate-700">
-            पृष्ठ {validCurrentPage} / {totalPages}
+            {language === "ne" ? `पृष्ठ ${validCurrentPage} / ${totalPages}` : `Page ${validCurrentPage} of ${totalPages}`}
           </div>
 
           <Button
@@ -515,7 +524,7 @@ export default function ImportantQuestionsPage() {
             disabled={validCurrentPage >= totalPages}
             className="gap-1.5 rounded-xl text-xs font-semibold"
           >
-            <span>पछिल्लो (Next)</span>
+            <span>{t.nextBtn}</span>
             <ChevronRight className="w-4 h-4" />
           </Button>
         </div>

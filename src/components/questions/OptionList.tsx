@@ -4,6 +4,7 @@ import React from "react";
 import { Check, X } from "lucide-react";
 import { OptionItem } from "@/types/question";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/context/LanguageContext";
 
 interface OptionListProps {
   options: OptionItem[];
@@ -22,10 +23,14 @@ export function OptionList({
   correctKey,
   disabled = false,
 }: OptionListProps) {
+  const { language, translateKey } = useLanguage();
+
   if (!options || options.length === 0) {
     return (
       <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs sm:text-sm font-medium font-devanagari">
-        यस प्रश्नका विकल्पहरू स्रोत सामग्रीमा उपलब्ध छैनन्।
+        {language === "ne"
+          ? "यस प्रश्नका विकल्पहरू स्रोत सामग्रीमा उपलब्ध छैनन्।"
+          : "Options for this question are not available in source documents."}
       </div>
     );
   }
@@ -37,14 +42,17 @@ export function OptionList({
         const isThisCorrect = isSubmitted && option.key === correctKey;
         const isThisWrong = isSubmitted && isSelected && option.key !== correctKey;
 
+        // Display key format: If English, show "A (क)", else "क"
+        const keyDisplay = language === "en" ? `${translateKey(option.key)} (${option.key})` : option.key;
+
         // Styling based on state
         let containerStyle =
-          "border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/20 text-slate-800 shadow-sm";
-        let badgeStyle = "bg-slate-100 text-slate-700 border-slate-200 group-hover:border-blue-300";
+          "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white text-slate-800 shadow-sm";
+        let badgeStyle = "bg-slate-100 text-slate-700 border-slate-200 group-hover:border-slate-300";
 
         if (!isSubmitted && isSelected) {
           containerStyle =
-            "border-blue-600 bg-blue-50/80 text-blue-950 ring-1 ring-blue-500/40 shadow-sm";
+            "liquid-glass-accent border-blue-500 text-blue-950 ring-1 ring-blue-500/30 shadow-sm";
           badgeStyle = "bg-blue-600 text-white border-blue-600 shadow-sm";
         } else if (isSubmitted) {
           if (isThisCorrect) {
@@ -76,11 +84,11 @@ export function OptionList({
             {/* Option Key Badge */}
             <div
               className={cn(
-                "w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 transition-colors",
+                "min-w-7 h-7 px-1 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 transition-colors",
                 badgeStyle
               )}
             >
-              {option.key}
+              {keyDisplay}
             </div>
 
             {/* Option Text */}
@@ -92,12 +100,12 @@ export function OptionList({
             {isSubmitted && (
               <div className="shrink-0 pt-0.5">
                 {isThisCorrect && (
-                  <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-sm">
                     <Check className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                 )}
                 {isThisWrong && (
-                  <div className="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center shadow-sm">
                     <X className="w-3.5 h-3.5 stroke-[3]" />
                   </div>
                 )}
