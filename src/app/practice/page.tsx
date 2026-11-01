@@ -171,14 +171,14 @@ function PracticeContent() {
   return (
     <PageContainer size="narrow" className="space-y-5">
       {/* Set Controls & Configuration Header */}
-      <div className="bg-white rounded-xl border border-zinc-200 p-4 sm:p-5 space-y-4 shadow-sm font-devanagari">
+      <div className="liquid-glass-card p-4 sm:p-5 space-y-4 font-devanagari">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full liquid-glass-pill text-blue-700 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>वास्तविक लिखित परीक्षा ढाँचा (Randomized Exam Practice)</span>
             </div>
-            <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight">
+            <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
               अनियमित प्रश्न अभ्यास (Random Practice)
             </h1>
           </div>
@@ -188,7 +188,7 @@ function PracticeContent() {
             variant="primary"
             size="sm"
             onClick={handleGenerateNewSet}
-            className="gap-2 font-semibold text-xs rounded-lg self-start sm:self-auto bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+            className="gap-2 font-semibold text-xs rounded-xl self-start sm:self-auto bg-blue-600 hover:bg-blue-700 text-white shadow-[0_2px_10px_rgba(37,99,235,0.25)]"
           >
             <Shuffle className="w-3.5 h-3.5" />
             <span>नयाँ प्रश्न सेट (New Random Set)</span>
@@ -308,26 +308,26 @@ function PracticeContent() {
         )}
       </div>
 
-      {/* Set Completed Banner (Appears when all questions in this random set are answered) */}
+      {/* Set Completed Banner */}
       {isSetCompleted && (
-        <div className="bg-white rounded-xl border border-zinc-200 p-5 shadow-sm space-y-3 font-devanagari">
+        <div className="liquid-glass-card p-5 space-y-3 font-devanagari">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <div
                 className={cn(
-                  "w-10 h-10 rounded-lg flex items-center justify-center text-white",
+                  "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm",
                   isSessionPassed ? "bg-emerald-600" : "bg-rose-600"
                 )}
               >
                 {isSessionPassed ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
               </div>
               <div>
-                <h3 className="font-bold text-zinc-900 text-sm sm:text-base">
+                <h3 className="font-bold text-slate-900 text-sm sm:text-base">
                   {isSessionPassed
                     ? `बधाई छ! यस सेटमा तपाईं उत्तीर्ण हुनुभयो (${sessionPercentage}%)`
                     : `यस सेटमा थप अभ्यास आवश्यक छ (${sessionPercentage}%)`}
                 </h3>
-                <p className="text-xs text-zinc-500">
+                <p className="text-xs text-slate-500">
                   कुल {activeQuestionSet.length} प्रश्नहरू मध्ये {correctInSession} सही उत्तर। उत्तीर्ण मापदण्ड: ५०%।
                 </p>
               </div>
@@ -337,7 +337,7 @@ function PracticeContent() {
               variant="primary"
               size="sm"
               onClick={handleGenerateNewSet}
-              className="gap-1.5 rounded-lg text-xs font-semibold shrink-0 bg-blue-600 hover:bg-blue-700 text-white"
+              className="gap-1.5 rounded-xl text-xs font-semibold shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>अर्को सेट लिनुहोस्</span>
@@ -385,25 +385,25 @@ function PracticeContent() {
           />
 
           {/* Navigation Controls Footer */}
-          <div className="bg-white rounded-xl border border-zinc-200 shadow-sm p-3.5 flex items-center justify-between gap-3 font-devanagari">
+          <div className="liquid-glass-card p-3.5 flex items-center justify-between gap-3 font-devanagari">
             <Button
               variant="outline"
               size="sm"
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              className="gap-1.5 rounded-lg text-xs font-semibold"
+              className="gap-1.5 rounded-xl text-xs font-semibold"
             >
               <ChevronLeft className="w-4 h-4" />
               <span>अघिल्लो (Previous)</span>
             </Button>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-zinc-700">
+              <span className="text-xs font-semibold text-slate-700">
                 सेट प्रश्न {currentIndex + 1} / {activeQuestionSet.length}
               </span>
               <button
                 onClick={handleGenerateNewSet}
-                className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-white/80 transition-colors"
                 title="नयाँ सेट सुरु गर्नुहोस्"
               >
                 <Shuffle className="w-3.5 h-3.5" />
@@ -415,7 +415,7 @@ function PracticeContent() {
               size="sm"
               onClick={handleNext}
               disabled={currentIndex >= activeQuestionSet.length - 1}
-              className="gap-1.5 rounded-lg text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-white"
+              className="gap-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
             >
               <span>पछिल्लो (Next)</span>
               <ChevronRight className="w-4 h-4" />

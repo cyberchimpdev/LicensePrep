@@ -107,10 +107,10 @@ export default function ImportantQuestionsPage() {
   return (
     <PageContainer size="wide" className="space-y-6">
       {/* nepallicense.com inspired Header Box */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-5 sm:p-7 space-y-5 shadow-sm">
+      <div className="liquid-glass-card p-5 sm:p-7 space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-pill text-blue-700 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
               <span>वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) - ५०० वस्तुगत प्रश्नोत्तर</span>
             </div>
@@ -317,7 +317,7 @@ export default function ImportantQuestionsPage() {
           return (
             <div
               key={q.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4 hover:border-slate-300 transition-all"
+              className="liquid-glass-card p-5 sm:p-6 space-y-4 liquid-glass-card-hover"
             >
               {/* Question Header */}
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
@@ -492,7 +492,7 @@ export default function ImportantQuestionsPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-3.5 flex items-center justify-between gap-4 font-devanagari">
+        <div className="liquid-glass-card p-3.5 flex items-center justify-between gap-4 font-devanagari">
           <Button
             variant="outline"
             size="sm"

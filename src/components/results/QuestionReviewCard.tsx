@@ -26,12 +26,12 @@ export function QuestionReviewCard({
   return (
     <div
       className={cn(
-        "bg-white rounded-2xl border p-5 sm:p-6 space-y-4 shadow-subtle transition-all",
+        "liquid-glass-card p-5 sm:p-6 space-y-4 font-devanagari",
         isCorrect
-          ? "border-emerald-200/80"
+          ? "border-emerald-300/80 bg-emerald-50/30"
           : isSkipped
           ? "border-slate-200"
-          : "border-red-200/80"
+          : "border-rose-300/80 bg-rose-50/30"
       )}
     >
       {/* Header */}

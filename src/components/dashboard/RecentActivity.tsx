@@ -30,7 +30,7 @@ export function RecentActivity({ progress, onReset }: RecentActivityProps) {
     <div className="space-y-4 font-devanagari">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Continue Learning / Resume Card */}
-        <div className="lg:col-span-1 bg-white rounded-xl border border-zinc-200 p-5 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-1 liquid-glass-card p-5 flex flex-col justify-between">
           <div>
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold mb-2.5">
               <Clock className="w-3.5 h-3.5 text-blue-600" />
@@ -78,7 +78,7 @@ export function RecentActivity({ progress, onReset }: RecentActivityProps) {
         </div>
 
         {/* Recent Exam History */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-zinc-200 p-5 shadow-sm flex flex-col justify-between">
+        <div className="lg:col-span-2 liquid-glass-card p-5 flex flex-col justify-between">
           <div className="flex items-center justify-between mb-3">
             <div>
               <h3 className="font-bold text-zinc-900 text-base tracking-tight flex items-center gap-1.5">

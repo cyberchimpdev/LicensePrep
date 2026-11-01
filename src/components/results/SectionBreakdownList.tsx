@@ -10,7 +10,7 @@ export function SectionBreakdownList({ sections }: SectionBreakdownListProps) {
   if (!sections || sections.length === 0) return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-subtle p-5 sm:p-6 space-y-4">
+    <div className="liquid-glass-card p-5 sm:p-6 space-y-4">
       <div>
         <h3 className="font-bold text-slate-900 text-base">
           Category Performance Breakdown (विषयगत नतिजा)

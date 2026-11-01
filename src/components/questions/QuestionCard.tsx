@@ -113,9 +113,9 @@ export function QuestionCard({
   }, [isSubmitted, selectedKey, question.options, handleSubmit]);
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-7 space-y-5 transition-all">
+    <div className="liquid-glass-card p-5 sm:p-7 space-y-5">
       {/* Header Info */}
-      <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+      <div className="flex items-center justify-between gap-3 border-b border-slate-200/60 pb-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white font-bold text-xs sm:text-sm tracking-wide">
             प्रश्न नं. {question.number}

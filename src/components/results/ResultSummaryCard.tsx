@@ -25,7 +25,7 @@ export function ResultSummaryCard({
   const isDistinction = result.percentage >= 80;
 
   return (
-    <div className="bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden font-devanagari">
+    <div className="liquid-glass-card overflow-hidden font-devanagari">
       {/* Top Banner - Clean flat modern surface */}
       <div
         className={cn(

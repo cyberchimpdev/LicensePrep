@@ -8,16 +8,16 @@ export default function AboutPage() {
   return (
     <PageContainer size="narrow" className="space-y-8">
       {/* Header */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-10 space-y-4 text-center sm:text-left">
+      <div className="liquid-glass-card p-6 sm:p-10 space-y-4 text-center sm:text-left">
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-navy-900 text-white flex items-center justify-center shrink-0 shadow-md">
-            <ShieldCheck className="w-8 h-8 text-blue-400" />
+          <div className="w-14 h-14 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-[0_4px_16px_rgba(37,99,235,0.3)]">
+            <ShieldCheck className="w-7 h-7" />
           </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-sans">
               About LicensePrep
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-500 mt-1 font-devanagari">
               Nepal Driving License Written Examination Preparation Platform (वर्ग ‘क’ र ‘ट’)
             </p>
           </div>
@@ -25,22 +25,22 @@ export default function AboutPage() {
       </div>
 
       {/* Overview */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-8 space-y-4">
+      <div className="liquid-glass-card p-6 sm:p-8 space-y-4">
         <h2 className="text-lg font-bold text-slate-900">Platform Objective</h2>
-        <p className="text-sm text-slate-600 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed font-devanagari">
           <strong>LicensePrep</strong> is an open educational preparation resource designed to help Nepali driving license candidates thoroughly prepare for their written examination.
         </p>
-        <p className="text-sm text-slate-600 leading-relaxed">
+        <p className="text-sm text-slate-600 leading-relaxed font-devanagari">
           The written exam for Category A (Motorcycle) and Category K (Scooter / Moped) administered by the Department of Transport Management (DOTM / यातायात व्यवस्था विभाग) draws its questions from a fixed syllabus of <strong>500 official objective questions</strong>.
         </p>
       </div>
 
       {/* Syllabus Breakdown */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-8 space-y-5">
+      <div className="liquid-glass-card p-6 sm:p-8 space-y-5 font-devanagari">
         <h2 className="text-lg font-bold text-slate-900">
           Official Examination Syllabus & Question Distribution
         </h2>
-        <div className="divide-y divide-slate-100 text-sm">
+        <div className="divide-y divide-slate-200/60 text-sm">
           <div className="py-3 flex items-center justify-between">
             <span className="font-medium text-slate-800">१. सवारी सञ्चालन सम्बन्धी ज्ञान</span>
             <span className="font-bold text-slate-900">१३० प्रश्नहरू (१ - १३०)</span>
@@ -65,7 +65,7 @@ export default function AboutPage() {
             <span className="font-medium text-slate-800">६. ट्राफिक सङ्केत सम्बन्धी ज्ञान</span>
             <span className="font-bold text-slate-900">११० प्रश्नहरू (३९१ - ५००)</span>
           </div>
-          <div className="pt-3 flex items-center justify-between font-bold text-navy-900 text-base">
+          <div className="pt-3 flex items-center justify-between font-bold text-blue-900 text-base">
             <span>जम्मा वस्तुगत प्रश्नहरू</span>
             <span>५०० प्रश्नहरू</span>
           </div>
@@ -73,7 +73,7 @@ export default function AboutPage() {
       </div>
 
       {/* Examination Structure */}
-      <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-8 space-y-4">
+      <div className="liquid-glass-card p-6 sm:p-8 space-y-4 font-devanagari">
         <h2 className="text-lg font-bold text-slate-900">Examination Format & Pass Rules</h2>
         <ul className="space-y-3 text-sm text-slate-600">
           <li className="flex items-start gap-2.5">
@@ -92,12 +92,12 @@ export default function AboutPage() {
       </div>
 
       {/* Privacy Guarantee */}
-      <div className="bg-blue-50/60 rounded-3xl border border-blue-200/80 p-6 sm:p-8 space-y-3">
+      <div className="liquid-glass-card p-6 sm:p-8 space-y-3 font-devanagari">
         <div className="flex items-center gap-2 text-blue-900 font-bold">
           <Lock className="w-5 h-5 text-blue-600" />
           <span>Local Storage & Privacy</span>
         </div>
-        <p className="text-xs text-blue-950/80 leading-relaxed">
+        <p className="text-xs text-slate-600 leading-relaxed">
           LicensePrep operates completely client-side. Your practice history, bookmarks, and mock exam scores are saved exclusively in your browser&apos;s localStorage. We do not transmit or store any personal data on external servers.
         </p>
       </div>

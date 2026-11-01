@@ -39,24 +39,24 @@ export function OptionList({
 
         // Styling based on state
         let containerStyle =
-          "border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/20 text-slate-800 shadow-sm";
+          "liquid-glass hover:bg-white text-slate-800";
         let badgeStyle = "bg-slate-100 text-slate-700 border-slate-200 group-hover:border-blue-300";
 
         if (!isSubmitted && isSelected) {
           containerStyle =
-            "border-blue-600 bg-blue-50/80 text-blue-950 ring-1 ring-blue-500/40 shadow-sm";
+            "liquid-glass-active text-blue-950 font-bold";
           badgeStyle = "bg-blue-600 text-white border-blue-600 shadow-sm";
         } else if (isSubmitted) {
           if (isThisCorrect) {
             containerStyle =
-              "border-emerald-500 bg-emerald-50 text-emerald-950 ring-1 ring-emerald-500/30";
+              "border-emerald-500 bg-emerald-50/90 text-emerald-950 ring-1 ring-emerald-500/30";
             badgeStyle = "bg-emerald-600 text-white border-emerald-600";
           } else if (isThisWrong) {
             containerStyle =
-              "border-rose-400 bg-rose-50 text-rose-950 ring-1 ring-rose-400/30";
+              "border-rose-400 bg-rose-50/90 text-rose-950 ring-1 ring-rose-400/30";
             badgeStyle = "bg-rose-600 text-white border-rose-600";
           } else {
-            containerStyle = "border-slate-200 bg-slate-50/50 text-slate-400 opacity-60";
+            containerStyle = "border-slate-200/80 bg-slate-50/50 text-slate-400 opacity-60";
             badgeStyle = "bg-slate-100 text-slate-400 border-slate-200";
           }
         }

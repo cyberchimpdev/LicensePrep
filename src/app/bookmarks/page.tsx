@@ -42,7 +42,7 @@ export default function BookmarksPage() {
   return (
     <PageContainer size="narrow" className="space-y-6">
       {/* Header */}
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-7 space-y-4 font-devanagari">
+      <div className="liquid-glass-card p-5 sm:p-7 space-y-4 font-devanagari">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-3">
@@ -128,7 +128,7 @@ export default function BookmarksPage() {
           {bookmarkedQuestions.map((q) => (
             <div
               key={q.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 sm:p-6 space-y-4 hover:border-slate-300 transition-all font-devanagari"
+              className="liquid-glass-card p-5 sm:p-6 space-y-4 liquid-glass-card-hover font-devanagari"
             >
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div className="flex flex-wrap items-center gap-2">

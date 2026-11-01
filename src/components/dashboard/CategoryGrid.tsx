@@ -54,7 +54,7 @@ export function CategoryGrid({ sectionStats }: CategoryGridProps) {
           return (
             <div
               key={sec.name}
-              className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:border-blue-400 hover:shadow-md transition-all flex flex-col justify-between group"
+              className="liquid-glass-card liquid-glass-card-hover p-5 flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-start justify-between gap-3 mb-3">

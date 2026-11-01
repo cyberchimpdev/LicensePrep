@@ -14,13 +14,46 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900;
+    background-color: #f8fafc;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(219, 234, 254, 0.4) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(224, 242, 254, 0.35) 0px, transparent 50%),
+      radial-gradient(at 50% 100%, rgba(238, 242, 255, 0.3) 0px, transparent 50%);
+    background-attachment: fixed;
+    @apply text-slate-900 min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900;
   }
 
   /* Refined typography for Devanagari (Nepali) */
   .font-devanagari, [lang="ne"] {
     line-height: 1.75;
     letter-spacing: 0.01em;
+  }
+}
+
+/* Liquid Glass Utilities */
+@layer components {
+  .liquid-glass {
+    @apply bg-white/75 backdrop-blur-xl border border-white/80 shadow-[0_4px_24px_rgba(15,23,42,0.04),0_1px_2px_rgba(15,23,42,0.02)] ring-1 ring-slate-900/[0.03];
+  }
+
+  .liquid-glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/90 shadow-[0_8px_32px_rgba(15,23,42,0.05),0_1px_3px_rgba(15,23,42,0.03)] ring-1 ring-slate-900/[0.04] rounded-2xl transition-all duration-200;
+  }
+
+  .liquid-glass-card-hover {
+    @apply hover:bg-white/95 hover:shadow-[0_12px_40px_rgba(15,23,42,0.09)] hover:-translate-y-0.5 hover:border-blue-200/90;
+  }
+
+  .liquid-glass-pill {
+    @apply bg-white/80 backdrop-blur-md border border-white/90 shadow-sm ring-1 ring-slate-900/[0.03];
+  }
+
+  .liquid-glass-active {
+    @apply bg-blue-50/80 backdrop-blur-md border-blue-500/80 ring-2 ring-blue-500/20 shadow-[0_2px_12px_rgba(37,99,235,0.08)];
+  }
+
+  .liquid-glass-nav {
+    @apply bg-white/80 backdrop-blur-2xl border-b border-white/70 shadow-[0_2px_16px_rgba(0,0,0,0.02)];
   }
 }
 

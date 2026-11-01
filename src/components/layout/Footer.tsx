@@ -4,7 +4,7 @@ import { ShieldCheck, Heart } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-slate-200 bg-white py-10">
+    <footer className="mt-auto border-t border-white/80 bg-white/70 backdrop-blur-xl py-10 shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand Col */}
