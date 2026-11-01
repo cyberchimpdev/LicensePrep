@@ -8,23 +8,23 @@
   }
 
   body {
-    @apply bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col font-sans;
+    @apply bg-slate-50/90 text-slate-900 antialiased min-h-screen flex flex-col font-sans selection:bg-blue-100 selection:text-blue-900;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   /* Improve rendering and line-height for Devanagari text so accents/matras don't get clipped */
   .font-devanagari, [lang="ne"] {
-    line-height: 1.65;
+    line-height: 1.7;
   }
 }
 
-/* Custom scrollbars for question navigation & lists */
+/* Custom scrollbars for category tabs, navigation & lists */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 ::-webkit-scrollbar-thumb {
   background: #cbd5e1;
@@ -39,4 +39,3 @@
   outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
-
