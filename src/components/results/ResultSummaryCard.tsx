@@ -25,7 +25,7 @@ export function ResultSummaryCard({
   const isDistinction = result.percentage >= 80;
 
   return (
-    <div className="liquid-glass-card overflow-hidden">
+    <div className="bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm">
       {/* Top Banner */}
       <div
         className={cn(
@@ -100,7 +100,7 @@ export function ResultSummaryCard({
           </div>
         </div>
         <div className="p-4 text-center">
-          <span className="text-xs text-slate-500 font-medium">Time Spent</span>
+          <span className="text-xs text-slate-500 font-medium">Time Taken</span>
           <div className="text-xl font-bold text-blue-600 mt-0.5 font-sans">
             {formatSeconds(result.timeSpentSeconds)}
           </div>
@@ -111,7 +111,7 @@ export function ResultSummaryCard({
       <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex flex-wrap items-center gap-1.5 self-start sm:self-auto">
           <span className="text-xs font-medium text-slate-500 mr-1 flex items-center gap-1">
-            <Filter className="w-3.5 h-3.5" /> Filter Review:
+            <Filter className="w-3.5 h-3.5" /> Review Answers:
           </span>
           <button
             onClick={() => onFilterChange("all")}
@@ -148,7 +148,7 @@ export function ResultSummaryCard({
           </button>
         </div>
 
-        <div className="flex items-center gap-2 self-end sm:self-auto">
+        <div className="flex flex-wrap items-center gap-2 self-end sm:self-auto">
           <Button
             variant="outline"
             size="sm"
@@ -156,8 +156,19 @@ export function ResultSummaryCard({
             className="gap-1.5 rounded-xl text-xs font-semibold"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Retry Exam</span>
+            <span>Retry Examination</span>
           </Button>
+
+          <Link href="/">
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1.5 rounded-xl text-xs font-semibold"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>Dashboard</span>
+            </Button>
+          </Link>
 
           <Link href="/practice">
             <Button

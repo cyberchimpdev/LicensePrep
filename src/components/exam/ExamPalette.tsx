@@ -21,15 +21,15 @@ export function ExamPalette({
   const unansweredCount = questions.length - answeredCount;
 
   return (
-    <div className="liquid-glass-card p-4 sm:p-5 space-y-4 font-devanagari">
+    <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-5 space-y-4 shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
           <h3 className="font-bold text-sm text-slate-900">
-            प्रश्न नेभिगेटर (CBT Palette)
+            Question Navigator
           </h3>
           <span className="text-[11px] text-slate-500">
-            कुल {questions.length} प्रश्नहरू
+            Total {questions.length} Questions
           </span>
         </div>
         <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60">
@@ -44,10 +44,10 @@ export function ExamPalette({
           const isAnswered = Boolean(q.userSelectedKey);
           const isFlagged = q.isFlagged;
 
-          let btnClass = "liquid-glass text-slate-700 hover:bg-white";
+          let btnClass = "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100";
 
           if (isCurrent) {
-            btnClass = "border-blue-600 bg-blue-600 text-white ring-2 ring-blue-300 font-bold shadow-[0_2px_8px_rgba(37,99,235,0.3)]";
+            btnClass = "border-blue-600 bg-blue-600 text-white ring-2 ring-blue-300 font-bold shadow-sm";
           } else if (isFlagged) {
             btnClass = "border-amber-400 bg-amber-500 text-white font-semibold shadow-sm";
           } else if (isAnswered) {
@@ -59,10 +59,10 @@ export function ExamPalette({
               key={q.id}
               onClick={() => onSelectQuestion(idx)}
               className={cn(
-                "relative h-9 w-full rounded-xl border text-xs flex items-center justify-center transition-all shrink-0",
+                "relative h-9 w-full rounded-xl border text-xs flex items-center justify-center transition-all shrink-0 font-medium font-sans",
                 btnClass
               )}
-              title={`प्रश्न नं. ${idx + 1}`}
+              title={`Question ${idx + 1}`}
             >
               <span>{idx + 1}</span>
               {isFlagged && !isCurrent && (
@@ -74,37 +74,37 @@ export function ExamPalette({
       </div>
 
       {/* CBT Legend with Live Counts */}
-      <div className="pt-3 border-t border-slate-200/60 space-y-1.5 text-xs text-slate-600">
+      <div className="pt-3 border-t border-slate-100 space-y-2 text-xs text-slate-600">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded bg-emerald-600" />
-            <span>हल गरिएको (Answered)</span>
+            <span>Answered</span>
           </div>
           <strong className="text-emerald-700 font-bold font-sans">{answeredCount}</strong>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             <div className="w-3 h-3 rounded bg-amber-500" />
-            <span>समीक्षाका लागि (Review)</span>
+            <span>Marked for Review</span>
           </div>
           <strong className="text-amber-700 font-bold font-sans">{flaggedCount}</strong>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-slate-200 border border-slate-300" />
-            <span>बाँकी प्रश्न (Unanswered)</span>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded bg-slate-100 border border-slate-300" />
+            <span>Unanswered</span>
           </div>
           <strong className="text-slate-700 font-bold font-sans">{unansweredCount}</strong>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded bg-blue-600" />
-            <span>चालु प्रश्न (Current)</span>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded bg-blue-600 ring-1 ring-blue-300" />
+            <span>Current Question</span>
           </div>
-          <strong className="text-blue-700 font-bold font-sans">#{currentIndex + 1}</strong>
+          <span className="text-blue-700 font-semibold font-sans">Active</span>
         </div>
       </div>
     </div>

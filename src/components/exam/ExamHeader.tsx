@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Clock, Flag, CheckCircle, AlertTriangle, Shield, Award, Monitor } from "lucide-react";
+import { Clock, Flag, CheckCircle, AlertTriangle, Monitor } from "lucide-react";
 import { formatSeconds } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 
@@ -27,12 +27,12 @@ export function ExamHeader({
   const progressPercent = Math.max(0, Math.min(100, ((totalSeconds - timeRemainingSeconds) / totalSeconds) * 100));
 
   return (
-    <div className="sticky top-0 z-30 liquid-glass-nav py-2.5 font-devanagari relative">
+    <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-slate-200 py-2.5 relative shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
           {/* Real CBT Candidate & Examination Identity */}
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-[0_2px_10px_rgba(37,99,235,0.3)]">
+            <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
               <Monitor className="w-5 h-5" />
             </div>
             <div className="min-w-0">
@@ -41,18 +41,18 @@ export function ExamHeader({
                   DOTM Computer-Based Testing (CBT)
                 </span>
                 <span className="hidden sm:inline-block text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80">
-                  वर्ग ‘क’ र ‘ट’
+                  Category A & K
                 </span>
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-500 mt-0.5">
                 <span className="flex items-center gap-1 font-medium text-emerald-700">
                   <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>{answeredCount} / {totalQuestions} हल गरियो</span>
+                  <span>{answeredCount} / {totalQuestions} Answered</span>
                 </span>
                 {flaggedCount > 0 && (
                   <span className="flex items-center gap-1 font-medium text-amber-700">
                     <Flag className="w-3.5 h-3.5 text-amber-500 fill-current" />
-                    <span>{flaggedCount} समीक्षा</span>
+                    <span>{flaggedCount} Flagged</span>
                   </span>
                 )}
               </div>
@@ -65,8 +65,8 @@ export function ExamHeader({
             <div
               className={`flex items-center gap-2 px-3 py-1.5 rounded-xl font-mono text-xs sm:text-sm font-bold border transition-all ${
                 isUrgent
-                  ? "bg-rose-50 text-rose-700 border-rose-300 animate-pulse shadow-[0_2px_10px_rgba(225,29,72,0.15)]"
-                  : "liquid-glass-pill text-slate-800"
+                  ? "bg-rose-50 text-rose-700 border-rose-300 animate-pulse"
+                  : "bg-slate-50 text-slate-800 border-slate-200"
               }`}
             >
               {isUrgent ? (
@@ -75,7 +75,7 @@ export function ExamHeader({
                 <Clock className="w-4 h-4 text-blue-600 shrink-0" />
               )}
               <span className="font-sans font-bold">{formatSeconds(timeRemainingSeconds)}</span>
-              <span className="text-[10px] font-medium text-slate-400 hidden sm:inline">बाँकी</span>
+              <span className="text-[10px] font-medium text-slate-400 hidden sm:inline">Remaining</span>
             </div>
 
             {/* Submit Button */}
@@ -83,16 +83,16 @@ export function ExamHeader({
               variant="primary"
               size="sm"
               onClick={onSubmitClick}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-[0_2px_10px_rgba(37,99,235,0.25)] px-4"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs rounded-xl shadow-sm px-4"
             >
-              <span>परीक्षा बुझाउनुहोस्</span>
+              <span>Submit Exam</span>
             </Button>
           </div>
         </div>
       </div>
 
       {/* Thin Timer Progress Indicator */}
-      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-200/50">
+      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-slate-100">
         <div
           className={`h-full transition-all duration-1000 ${
             isUrgent ? "bg-rose-500" : "bg-blue-600"
