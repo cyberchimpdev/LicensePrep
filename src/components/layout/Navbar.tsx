@@ -12,16 +12,17 @@ import {
   Menu,
   X,
   Compass,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home", subLabel: "गृहपृष्ठ", icon: Compass },
+  { href: "/", label: "Dashboard", subLabel: "गृहपृष्ठ", icon: Compass },
   { href: "/practice", label: "Practice", subLabel: "अभ्यास", icon: BookOpen },
   { href: "/exam", label: "Mock Exam", subLabel: "नमुना परीक्षा", icon: Award },
-  { href: "/questions", label: "Question Bank", subLabel: "प्रश्न बैंक", icon: Layers },
-  { href: "/bookmarks", label: "Bookmarks", subLabel: "सुरक्षित", icon: Bookmark },
-  { href: "/about", label: "About", subLabel: "जानकारी", icon: Info },
+  { href: "/questions", label: "Question Bank", subLabel: "५०० प्रश्नहरू", icon: Layers },
+  { href: "/bookmarks", label: "Bookmarks", subLabel: "सुरक्षित प्रश्नहरू", icon: Bookmark },
+  { href: "/about", label: "Syllabus", subLabel: "नियम र ढाँचा", icon: Info },
 ];
 
 export function Navbar() {
@@ -34,15 +35,15 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md">
+    <header className="sticky top-0 z-40 w-full border-b border-slate-200/90 bg-white/95 backdrop-blur-md transition-all shadow-[0_2px_10px_rgba(0,0,0,0.03)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-16 items-center justify-between gap-4">
           {/* Brand Logo */}
           <Link
             href="/"
-            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-lg p-1"
+            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-xl p-1"
           >
-            <div className="w-10 h-10 rounded-xl bg-navy-900 flex items-center justify-center text-white shadow-md shadow-navy-900/10 group-hover:bg-blue-600 transition-colors">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-navy-900 to-slate-900 flex items-center justify-center text-white shadow-md shadow-navy-900/15 group-hover:scale-105 group-hover:from-blue-600 group-hover:to-blue-700 transition-all">
               <svg
                 className="w-5 h-5 fill-current"
                 viewBox="0 0 24 24"
@@ -52,17 +53,22 @@ export function Navbar() {
               </svg>
             </div>
             <div className="flex flex-col">
-              <span className="font-extrabold text-lg sm:text-xl text-navy-900 tracking-tight leading-none group-hover:text-blue-600 transition-colors">
-                License<span className="text-blue-600">Prep</span>
-              </span>
-              <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mt-0.5">
-                Nepal Driving License (A & K)
+              <div className="flex items-center gap-1.5">
+                <span className="font-extrabold text-lg sm:text-xl text-navy-900 tracking-tight leading-none">
+                  License<span className="text-blue-600">Prep</span>
+                </span>
+                <span className="hidden sm:inline-block px-1.5 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">
+                  DOTM
+                </span>
+              </div>
+              <span className="text-[10px] font-semibold text-slate-500 tracking-wider mt-0.5">
+                नेपाल सवारी चालक परीक्षा (A & K)
               </span>
             </div>
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
             {NAV_LINKS.map((item) => {
               const active = isActive(item.href);
               const Icon = item.icon;
@@ -71,15 +77,15 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all",
+                    "flex items-center gap-2 px-3 py-2 rounded-xl text-xs lg:text-sm font-semibold transition-all",
                     active
-                      ? "bg-blue-50 text-blue-700 font-semibold"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                      ? "bg-blue-50/80 text-blue-700 shadow-sm ring-1 ring-blue-600/15"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
                   )}
                 >
                   <Icon
                     className={cn(
-                      "w-4 h-4",
+                      "w-4 h-4 transition-colors",
                       active ? "text-blue-600" : "text-slate-400"
                     )}
                   />
@@ -90,13 +96,13 @@ export function Navbar() {
           </nav>
 
           {/* Practice Fast CTA */}
-          <div className="hidden lg:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-2.5">
             <Link
               href="/exam"
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-navy-900 text-white hover:bg-navy-800 transition-colors shadow-sm flex items-center gap-1.5"
+              className="px-4 py-2 rounded-xl text-xs font-bold bg-navy-900 text-white hover:bg-navy-800 transition-all shadow-sm flex items-center gap-2 group active:scale-95"
             >
-              <Award className="w-3.5 h-3.5 text-blue-400" />
-              <span>Take Exam</span>
+              <Award className="w-4 h-4 text-blue-400 group-hover:scale-110 transition-transform" />
+              <span>Take Mock Exam</span>
             </Link>
           </div>
 
@@ -104,7 +110,7 @@ export function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
               aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? (
@@ -117,9 +123,9 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-1 shadow-lg animate-in slide-in-from-top duration-200">
+        <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-1.5 shadow-xl animate-in slide-in-from-top-2 duration-200">
           {NAV_LINKS.map((item) => {
             const active = isActive(item.href);
             const Icon = item.icon;
@@ -129,9 +135,9 @@ export function Navbar() {
                 href={item.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  "flex items-center justify-between px-3.5 py-3 rounded-lg text-base font-medium transition-colors",
+                  "flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors",
                   active
-                    ? "bg-blue-50 text-blue-700 font-semibold"
+                    ? "bg-blue-50 text-blue-700 ring-1 ring-blue-600/20"
                     : "text-slate-700 hover:bg-slate-100"
                 )}
               >
@@ -154,10 +160,10 @@ export function Navbar() {
             <Link
               href="/exam"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-lg bg-navy-900 text-white font-semibold text-sm hover:bg-navy-800 transition-colors shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-navy-900 text-white font-bold text-sm hover:bg-navy-800 transition-colors shadow-md"
             >
               <Award className="w-4 h-4 text-blue-400" />
-              <span>Start Mock Exam Now</span>
+              <span>Start 20-Question Mock Exam</span>
             </Link>
           </div>
         </div>
@@ -165,4 +171,3 @@ export function Navbar() {
     </header>
   );
 }
-

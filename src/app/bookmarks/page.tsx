@@ -46,24 +46,26 @@ export default function BookmarksPage() {
       <div className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-6 sm:p-8 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="flex items-center gap-2">
-              <span className="p-2 rounded-xl bg-amber-50 text-amber-600">
-                <Bookmark className="w-5 h-5 fill-current" />
+            <div className="flex items-center gap-3">
+              <span className="p-2.5 rounded-2xl bg-amber-50 text-amber-600 shadow-sm">
+                <Bookmark className="w-6 h-6 fill-current" />
               </span>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                Bookmarked Questions (सुरक्षित प्रश्नहरू)
-              </h1>
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                  Bookmarked Questions (सुरक्षित प्रश्नहरू)
+                </h1>
+                <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                  Questions you have flagged for revision and dedicated practice.
+                </p>
+              </div>
             </div>
-            <p className="text-sm text-slate-500 mt-1">
-              Questions you have marked for quick review and dedicated revision.
-            </p>
           </div>
 
           {bookmarkedQuestions.length > 0 && (
             <Link href="/practice?filter=bookmarked">
-              <Button variant="primary" size="md" className="gap-2 bg-navy-900 hover:bg-navy-800">
+              <Button variant="primary" size="md" className="gap-2 bg-navy-900 hover:bg-navy-800 rounded-xl font-bold shadow-md">
                 <BookOpen className="w-4 h-4" />
-                <span>Practice Bookmarks</span>
+                <span>Practice All Saved ({progress.bookmarks.length})</span>
               </Button>
             </Link>
           )}
@@ -71,14 +73,14 @@ export default function BookmarksPage() {
 
         {/* Section Filter Pills */}
         {uniqueSections.length > 1 && (
-          <div className="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500 font-medium">Filter Category:</span>
+          <div className="pt-3 border-t border-slate-100 flex flex-wrap items-center gap-2">
+            <span className="text-xs text-slate-500 font-bold">Filter Category:</span>
             <button
               onClick={() => setSelectedSection("all")}
               className={cn(
-                "px-2.5 py-1 rounded-lg text-xs font-semibold transition-all",
+                "px-3 py-1.5 rounded-xl text-xs font-bold transition-all",
                 selectedSection === "all"
-                  ? "bg-navy-900 text-white"
+                  ? "bg-navy-900 text-white shadow-sm"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               )}
             >
@@ -89,9 +91,9 @@ export default function BookmarksPage() {
                 key={sec}
                 onClick={() => setSelectedSection(sec)}
                 className={cn(
-                  "px-2.5 py-1 rounded-lg text-xs font-semibold transition-all",
+                  "px-3 py-1.5 rounded-xl text-xs font-bold transition-all",
                   selectedSection === sec
-                    ? "bg-navy-900 text-white"
+                    ? "bg-navy-900 text-white shadow-sm"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                 )}
               >
@@ -104,19 +106,19 @@ export default function BookmarksPage() {
 
       {/* Bookmarks List or Empty State */}
       {bookmarkedQuestions.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center shadow-card space-y-4">
-          <div className="w-16 h-16 rounded-full bg-amber-50 text-amber-500 mx-auto flex items-center justify-center">
+        <div className="bg-white rounded-3xl border border-slate-200 p-12 sm:p-16 text-center shadow-card space-y-4">
+          <div className="w-16 h-16 rounded-3xl bg-amber-50 text-amber-500 mx-auto flex items-center justify-center shadow-inner">
             <Bookmark className="w-8 h-8" />
           </div>
-          <h3 className="text-lg font-bold text-slate-800">
+          <h3 className="text-xl font-extrabold text-slate-900">
             No Bookmarked Questions Yet
           </h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
-            While practicing or browsing the question bank, click the bookmark icon on questions you find tricky or want to review again.
+          <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto leading-relaxed">
+            While practicing or browsing the question bank, click the bookmark icon on any tricky questions to save them for revision.
           </p>
           <div className="pt-2">
             <Link href="/practice">
-              <Button variant="primary" size="md">
+              <Button variant="primary" size="md" className="rounded-xl font-bold bg-navy-900 hover:bg-navy-800">
                 Start Practicing Questions
               </Button>
             </Link>
@@ -127,11 +129,11 @@ export default function BookmarksPage() {
           {bookmarkedQuestions.map((q) => (
             <div
               key={q.id}
-              className="bg-white rounded-2xl border border-slate-200/90 shadow-subtle p-5 sm:p-6 space-y-4"
+              className="bg-white rounded-3xl border border-slate-200/90 shadow-subtle p-5 sm:p-7 space-y-4 hover:border-amber-200 transition-all"
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-bold text-xs px-2.5 py-1 rounded-lg bg-navy-900 text-white">
+                  <span className="font-extrabold text-xs px-3 py-1 rounded-xl bg-navy-900 text-white shadow-sm">
                     प्रश्न नं. {q.number}
                   </span>
                   <Badge variant="default" size="sm">
@@ -142,15 +144,15 @@ export default function BookmarksPage() {
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/practice?question=${q.number}`}
-                    className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg text-xs font-semibold flex items-center gap-1"
+                    className="p-1.5 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-colors"
                   >
-                    <span>Practice this</span>
+                    <span>Practice</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
 
                   <button
                     onClick={() => toggleBookmark(q.number)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                    className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors"
                     title="Remove from bookmarks"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -158,27 +160,27 @@ export default function BookmarksPage() {
                 </div>
               </div>
 
-              <div className="text-base font-bold text-slate-900 leading-relaxed font-devanagari">
+              <div className="text-base sm:text-xl font-bold text-slate-900 leading-relaxed font-devanagari">
                 {q.question}
               </div>
 
               {/* Options */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                 {q.options.map((opt) => {
                   const isCorrect = opt.key === q.correctAnswerKey;
                   return (
                     <div
                       key={opt.key}
                       className={cn(
-                        "p-3 rounded-xl border text-xs flex items-start gap-2.5",
+                        "p-3 rounded-2xl border text-xs sm:text-sm flex items-start gap-3 transition-all",
                         isCorrect
-                          ? "border-emerald-300 bg-emerald-50 text-emerald-950 font-medium"
-                          : "border-slate-200/70 bg-slate-50/50 text-slate-700"
+                          ? "border-emerald-400 bg-emerald-50 text-emerald-950 font-bold ring-1 ring-emerald-300"
+                          : "border-slate-200/80 bg-slate-50/50 text-slate-700 font-medium"
                       )}
                     >
                       <div
                         className={cn(
-                          "w-5 h-5 rounded font-bold text-[11px] flex items-center justify-center shrink-0",
+                          "w-6 h-6 rounded-lg font-extrabold text-xs flex items-center justify-center shrink-0 mt-0.5",
                           isCorrect
                             ? "bg-emerald-600 text-white"
                             : "bg-slate-200 text-slate-700"
@@ -186,9 +188,9 @@ export default function BookmarksPage() {
                       >
                         {opt.key}
                       </div>
-                      <div className="flex-1 leading-snug">{opt.text}</div>
+                      <div className="flex-1 leading-snug font-devanagari">{opt.text}</div>
                       {isCorrect && (
-                        <CheckCircle className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                       )}
                     </div>
                   );
@@ -201,4 +203,3 @@ export default function BookmarksPage() {
     </PageContainer>
   );
 }
-
