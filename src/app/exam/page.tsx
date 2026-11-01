@@ -179,7 +179,7 @@ export default function ExamPage() {
   const handleCancelActiveExam = () => {
     if (
       window.confirm(
-        "के तपाईं यो परीक्षा रद्द गर्न चाहनुहुन्छ? तपाईंको अहिलेसम्मको प्रगति सुरक्षित हुने छैन।"
+        "Are you sure you want to abandon this examination? Your progress will not be saved."
       )
     ) {
       clearActiveExam();
@@ -226,16 +226,16 @@ export default function ExamPage() {
   // ==========================================
   if (!activeSession) {
     return (
-      <PageContainer size="narrow" className="space-y-6 font-devanagari">
+      <PageContainer size="narrow" className="space-y-6">
         <div className="text-center max-w-xl mx-auto space-y-2 pt-2">
           <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white mx-auto flex items-center justify-center shadow-[0_4px_16px_rgba(37,99,235,0.3)]">
             <Monitor className="w-6 h-6" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">
-            कम्प्युटर आधारित लिखित परीक्षा (CBT Simulation)
+            Computer-Based Written Exam (CBT Simulation)
           </h1>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-            यातायात व्यवस्था विभागको आधिकारिक वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) लिखित परीक्षाको वास्तविक कम्प्युटर प्रणाली।
+            Official Nepal Department of Transport Management (DOTM) Category &apos;A&apos; (Motorcycle) and &apos;K&apos; (Scooter) exam simulation.
           </p>
         </div>
 
@@ -243,9 +243,9 @@ export default function ExamPage() {
         <div className="liquid-glass-card p-5 sm:p-7 space-y-5">
           <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
             <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              परीक्षा प्रकार छनोट गर्नुहोस्
+              Select Examination Mode
             </h2>
-            <span className="text-xs font-semibold text-blue-600">DOTM आधिकारिक ढाँचा</span>
+            <span className="text-xs font-semibold text-blue-600">DOTM Official Standard</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -264,7 +264,7 @@ export default function ExamPage() {
                 >
                   {preset.id === "standard" && (
                     <div className="absolute -top-2.5 left-3 px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                      आधिकारिक ढाँचा
+                      Official Format
                     </div>
                   )}
 
@@ -281,22 +281,22 @@ export default function ExamPage() {
                     <div className="mt-3 space-y-1 text-xs text-slate-600">
                       <div className="flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-                        <span><strong>{preset.questionCount}</strong> बहुवैकल्पिक प्रश्नहरू</span>
+                        <span><strong>{preset.questionCount}</strong> Questions</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Timer className="w-3.5 h-3.5 text-amber-600" />
-                        <span><strong>{preset.timeLimitMinutes}</strong> मिनेट समय</span>
+                        <span><strong>{preset.timeLimitMinutes}</strong> Minutes Timer</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>उत्तीर्ण: <strong>{preset.passingPercentage}%</strong> अङ्क</span>
+                        <span>Passing: <strong>{preset.passingPercentage}%</strong> Mark</span>
                       </div>
                     </div>
                   </div>
 
                   <div className="mt-4 pt-2.5 border-t border-slate-200/60 flex items-center justify-between text-xs font-semibold">
                     <span className={isSelected ? "text-blue-600" : "text-slate-500"}>
-                      {isSelected ? "छनोट गरिएको" : "छनोट गर्नुहोस्"}
+                      {isSelected ? "Selected" : "Select Mode"}
                     </span>
                     <input
                       type="radio"
@@ -315,20 +315,20 @@ export default function ExamPage() {
           <div className="p-4 rounded-xl liquid-glass space-y-2 text-xs text-slate-700">
             <div className="font-bold text-slate-900 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>परीक्षा निर्देशन तथा नियमहरू:</span>
+              <span>Examination Rules & Instructions:</span>
             </div>
             <ul className="list-disc list-inside space-y-1 text-slate-600 pl-1">
-              <li>परीक्षा सुरु भएपछि ३० मिनेटको घडी निरन्तर चल्नेछ।</li>
-              <li>कुनै पनि प्रश्न बाँकी राख्न वा पछि समीक्षा गर्नका लागि &apos;Flag&apos; गर्न सकिन्छ।</li>
-              <li>समय समाप्त भएपछि परीक्षा स्वतः बुझाइनेछ र नतिजा तत्काल प्रदर्शित हुनेछ।</li>
-              <li>प्रत्येक प्रश्नको उत्तर विकल्पहरू निष्पक्षताका लागि अनियमित क्रममा राखिएका हुन्छन्।</li>
+              <li>A real-time 30-minute countdown timer runs throughout the examination.</li>
+              <li>You can skip questions or mark them with &quot;Flag for Later&quot; for review.</li>
+              <li>When time expires, your answers are submitted automatically and graded instantly.</li>
+              <li>Answer options are shuffled unpredictably to test true road safety knowledge.</li>
             </ul>
           </div>
 
           {/* Start CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
             <div className="text-xs text-slate-500 font-medium">
-              तयारी पूरा भएपछि मात्र परीक्षा सुरु गर्नुहोस्।
+              Start only when you are ready in a distraction-free environment.
             </div>
             <Button
               variant="primary"
@@ -342,7 +342,7 @@ export default function ExamPage() {
               className="w-full sm:w-auto px-6 font-semibold rounded-xl shadow-[0_4px_16px_rgba(37,99,235,0.3)] gap-2 bg-blue-600 hover:bg-blue-700 text-white"
             >
               <Play className="w-4 h-4 fill-current" />
-              <span>परीक्षा सुरु गर्नुहोस् (Start CBT Exam)</span>
+              <span>Start CBT Examination</span>
             </Button>
           </div>
         </div>
@@ -360,10 +360,10 @@ export default function ExamPage() {
   const unansweredCount = totalQuestions - answeredCount;
 
   return (
-    <div className="min-h-screen flex flex-col font-devanagari">
+    <div className="min-h-screen flex flex-col">
       {/* Sticky Liquid Glass Header with Timer & Submit */}
       <ExamHeader
-        title={activeSession.config.title || "सवारी चालक अनुमतिपत्र नमुना परीक्षा"}
+        title={activeSession.config.title || "Nepal Driving License Mock Exam"}
         timeRemainingSeconds={activeSession.timeRemainingSeconds}
         totalQuestions={totalQuestions}
         answeredCount={answeredCount}
@@ -380,11 +380,11 @@ export default function ExamPage() {
               <div className="flex items-center justify-between gap-3 border-b border-slate-200/60 pb-3">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-xs sm:text-sm px-2.5 py-0.5 rounded-lg bg-blue-600 text-white">
-                    प्रश्न {activeSession.currentIndex + 1} / {totalQuestions}
+                    Question {activeSession.currentIndex + 1} of {totalQuestions}
                   </span>
                   <Badge variant="info">{currentQ.section}</Badge>
                   <span className="text-[11px] text-slate-400 font-medium hidden sm:inline">
-                    अङ्क: ५ (5 Marks)
+                    Score: 5 Marks
                   </span>
                 </div>
 
@@ -420,12 +420,12 @@ export default function ExamPage() {
                 </div>
               </div>
 
-              {/* Question Text */}
+              {/* Question Text (Authentic Nepali) */}
               <div className="text-base sm:text-xl font-bold text-slate-900 leading-relaxed font-devanagari">
                 {currentQ.question}
               </div>
 
-              {/* Options */}
+              {/* Options (Authentic Nepali with letter badge) */}
               <div className="space-y-2.5 pt-1">
                 {currentQ.options.map((opt) => {
                   const isSelected = currentQ.userSelectedKey === opt.key;
@@ -470,7 +470,7 @@ export default function ExamPage() {
                     onClick={() => handleSelectOption(currentQ.userSelectedKey!)}
                     className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
                   >
-                    छनोट हटाउनुहोस् (Clear selection)
+                    Clear selection
                   </button>
                 </div>
               )}
@@ -486,7 +486,7 @@ export default function ExamPage() {
                 className="gap-1.5 rounded-xl text-xs font-semibold"
               >
                 <ChevronLeft className="w-4 h-4" />
-                <span>अघिल्लो (Previous)</span>
+                <span>Previous</span>
               </Button>
 
               <button
@@ -494,7 +494,7 @@ export default function ExamPage() {
                 className="text-xs text-slate-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-medium"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">परीक्षा रद्द गर्नुहोस्</span>
+                <span className="hidden sm:inline">Abandon Exam</span>
               </button>
 
               <Button
@@ -504,7 +504,7 @@ export default function ExamPage() {
                 disabled={activeSession.currentIndex >= totalQuestions - 1}
                 className="gap-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
               >
-                <span>पछिल्लो (Next)</span>
+                <span>Next</span>
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
@@ -522,15 +522,15 @@ export default function ExamPage() {
             <div className="liquid-glass-card p-4 space-y-3">
               <div className="text-xs text-slate-600 space-y-1">
                 <div className="flex justify-between">
-                  <span>हल गरिएका प्रश्न:</span>
+                  <span>Answered Questions:</span>
                   <strong className="text-emerald-700 font-bold font-sans">{answeredCount}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>बाँकी प्रश्न:</span>
+                  <span>Unanswered Remaining:</span>
                   <strong className="text-slate-700 font-bold font-sans">{unansweredCount}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>समीक्षा (Flag):</span>
+                  <span>Marked for Review (Flagged):</span>
                   <strong className="text-amber-700 font-bold font-sans">{flaggedCount}</strong>
                 </div>
               </div>
@@ -541,7 +541,7 @@ export default function ExamPage() {
                 onClick={() => setShowSummaryModal(true)}
                 className="w-full font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-[0_2px_10px_rgba(37,99,235,0.25)]"
               >
-                परीक्षा बुझाउनुहोस् (Submit Exam)
+                Submit Examination
               </Button>
             </div>
           </div>
@@ -553,12 +553,12 @@ export default function ExamPage() {
         <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end">
           <div className="bg-white/95 backdrop-blur-2xl w-full rounded-t-2xl p-5 max-h-[80vh] overflow-y-auto space-y-4 animate-in slide-in-from-bottom">
             <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="font-bold text-sm text-slate-900">प्रश्न नेभिगेटर (Palette)</h3>
+              <h3 className="font-bold text-sm text-slate-900">Question Palette</h3>
               <button
                 onClick={() => setMobilePaletteOpen(false)}
                 className="text-xs font-bold text-slate-500 p-1"
               >
-                बन्द गर्नुहोस्
+                Close
               </button>
             </div>
             <ExamPalette

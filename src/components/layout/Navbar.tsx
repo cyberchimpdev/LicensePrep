@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  Compass,
+  Home,
   Layers,
   BookOpen,
   Award,
@@ -14,16 +14,23 @@ import {
   X,
   Shield,
   Sparkles,
+  TrafficCone,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_LINKS = [
-  { href: "/", label: "गृहपृष्ठ", sub: "Home", icon: Compass },
-  { href: "/questions", label: "प्रश्नोत्तर बैंक", sub: "500 Q&A", icon: Layers },
-  { href: "/practice", label: "अनियमित अभ्यास", sub: "Practice", icon: BookOpen },
-  { href: "/exam", label: "नमुना परीक्षा", sub: "CBT Exam", icon: Award },
-  { href: "/bookmarks", label: "सुरक्षित", sub: "Saved", icon: Bookmark },
-  { href: "/about", label: "पाठ्यक्रम", sub: "Syllabus", icon: Info },
+  { href: "/", label: "Home", sub: "गृहपृष्ठ", icon: Home },
+  { href: "/exam", label: "Mock Exam", sub: "नमुना परीक्षा", icon: Award },
+  { href: "/practice", label: "Practice", sub: "अभ्यास सेट", icon: BookOpen },
+  { href: "/questions", label: "500 Questions", sub: "प्रश्नोत्तर", icon: Layers },
+  {
+    href: `/questions?section=${encodeURIComponent("ट्राफिक सङ्केत सम्बन्धी ज्ञान")}`,
+    label: "Traffic Signs",
+    sub: "ट्राफिक संकेत",
+    icon: TrafficCone,
+  },
+  { href: "/bookmarks", label: "Bookmarks", sub: "सुरक्षित", icon: Bookmark },
+  { href: "/about", label: "Syllabus", sub: "पाठ्यक्रम", icon: Info },
 ];
 
 export function Navbar() {
@@ -39,7 +46,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 w-full liquid-glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between gap-4">
-          {/* Brand Logo with Liquid Glass Pill */}
+          {/* Brand Logo */}
           <Link
             href="/"
             className="flex items-center gap-2.5 group focus:outline-none"
@@ -53,17 +60,17 @@ export function Navbar() {
                   License<span className="text-blue-600">Prep</span>
                 </span>
                 <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/80">
-                  DOTM CBT
+                  DOTM
                 </span>
               </div>
-              <span className="text-[10px] font-medium text-slate-500 mt-0.5 font-devanagari">
-                नेपाल लाइसेन्स लिखित परीक्षा
+              <span className="text-[10px] font-medium text-slate-500 mt-0.5">
+                Nepal Driving License Exam
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 font-devanagari">
+          <nav className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map((item) => {
               const active = isActive(item.href);
               const Icon = item.icon;
@@ -94,15 +101,15 @@ export function Navbar() {
           <div className="hidden sm:flex items-center gap-2.5">
             <Link
               href="/exam"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-[0_2px_10px_rgba(37,99,235,0.25)] transition-all active:scale-[0.98] font-devanagari"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-[0_2px_10px_rgba(37,99,235,0.25)] transition-all active:scale-[0.98]"
             >
               <Award className="w-3.5 h-3.5 text-amber-300" />
-              <span>नमुना परीक्षा (CBT Exam)</span>
+              <span>Take Mock Test</span>
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="flex md:hidden">
+          <div className="flex lg:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-white/80 focus:outline-none"
@@ -120,7 +127,7 @@ export function Navbar() {
 
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200/80 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-5 space-y-1 shadow-lg animate-in slide-in-from-top-2 duration-150 font-devanagari">
+        <div className="lg:hidden border-t border-slate-200/80 bg-white/95 backdrop-blur-xl px-4 pt-3 pb-5 space-y-1 shadow-lg animate-in slide-in-from-top-2 duration-150">
           {NAV_LINKS.map((item) => {
             const active = isActive(item.href);
             const Icon = item.icon;
@@ -145,7 +152,9 @@ export function Navbar() {
                   />
                   <span>{item.label}</span>
                 </div>
-                <span className="text-xs text-slate-400 font-normal">{item.sub}</span>
+                <span className="text-xs text-slate-400 font-normal font-devanagari">
+                  {item.sub}
+                </span>
               </Link>
             );
           })}
@@ -156,7 +165,7 @@ export function Navbar() {
               className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl bg-blue-600 text-white font-semibold text-xs shadow-sm hover:bg-blue-700 transition-colors"
             >
               <Award className="w-4 h-4 text-amber-300" />
-              <span>अनलाइन परीक्षा सुरु गर्नुहोस् (२० प्रश्न / ३० मिनेट)</span>
+              <span>Start Mock Exam (20 Questions / 30 Min)</span>
             </Link>
           </div>
         </div>

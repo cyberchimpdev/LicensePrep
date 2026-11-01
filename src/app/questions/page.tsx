@@ -29,14 +29,14 @@ import { cn } from "@/lib/utils";
 const ITEMS_PER_PAGE_OPTIONS = [20, 50, 100];
 
 const POPULAR_SEARCH_TAGS = [
-  "जेब्रा क्रस",
-  "रातो बत्ती",
-  "हेलमेट",
-  "ओभरटेक",
+  "जेब्रा क्रस (Zebra Cross)",
+  "रातो बत्ती (Red Light)",
+  "हेलमेट (Helmet)",
+  "ओभरटेक (Overtaking)",
   "गति (Speed)",
-  "इन्जिन",
-  "सवारी कर",
-  "ट्राफिक संकेत",
+  "इन्जिन (Engine)",
+  "सवारी कर (Tax)",
+  "ट्राफिक संकेत (Signs)",
 ];
 
 export default function ImportantQuestionsPage() {
@@ -106,19 +106,19 @@ export default function ImportantQuestionsPage() {
 
   return (
     <PageContainer size="wide" className="space-y-6">
-      {/* nepallicense.com inspired Header Box */}
+      {/* Header Box */}
       <div className="liquid-glass-card p-5 sm:p-7 space-y-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full liquid-glass-pill text-blue-700 text-xs font-semibold">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              <span>वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) - ५०० वस्तुगत प्रश्नोत्तर</span>
+              <span>Category &apos;A&apos; & &apos;K&apos; • Official 500 Q&A Bank</span>
             </div>
-            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight font-devanagari">
-              महत्त्वपूर्ण प्रश्नोत्तर (Important Questions with Answers)
+            <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 tracking-tight">
+              Important Questions Library (500 Q&A)
             </h1>
-            <p className="text-xs sm:text-sm text-slate-600 font-devanagari max-w-2xl">
-              यातायात व्यवस्था विभाग (DOTM) को आधिकारिक पाठ्यक्रममा आधारित ५०० प्रश्नोत्तरहरू। यहाँबाट सम्पूर्ण प्रश्नहरूको अध्ययन गर्नुहोस् र उत्तर जाँच गर्नुहोस्।
+            <p className="text-xs sm:text-sm text-slate-600 max-w-2xl">
+              Complete collection of 500 official DOTM written exam questions. Study questions, reveal official keys, and test your readiness.
             </p>
           </div>
 
@@ -128,10 +128,10 @@ export default function ImportantQuestionsPage() {
               <Button
                 variant="outline"
                 size="sm"
-                className="gap-1.5 font-semibold text-xs rounded-xl border-zinc-200"
+                className="gap-1.5 font-semibold text-xs rounded-xl border-slate-200"
               >
                 <Shuffle className="w-3.5 h-3.5 text-blue-600" />
-                <span>अनियमित २० प्रश्न अभ्यास (Random Practice)</span>
+                <span>Random 20 Practice</span>
               </Button>
             </Link>
 
@@ -147,19 +147,19 @@ export default function ImportantQuestionsPage() {
               {showAllAnswers ? (
                 <>
                   <EyeOff className="w-4 h-4" />
-                  <span>उत्तर लुकाउनुहोस् (Hide Answers)</span>
+                  <span>Hide Answers</span>
                 </>
               ) : (
                 <>
                   <Eye className="w-4 h-4" />
-                  <span>सबै उत्तर देखाउनुहोस् (Show All)</span>
+                  <span>Show All Answers</span>
                 </>
               )}
             </Button>
           </div>
         </div>
 
-        {/* Category Tabs (Horizontally scrollable like nepallicense.com) */}
+        {/* Category Tabs */}
         <div className="pt-2 border-t border-slate-100">
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
             <button
@@ -168,13 +168,13 @@ export default function ImportantQuestionsPage() {
                 setCurrentPage(1);
               }}
               className={cn(
-                "whitespace-nowrap px-3.5 py-1.5 rounded-xl font-semibold transition-all border shrink-0 font-devanagari",
+                "whitespace-nowrap px-3.5 py-1.5 rounded-xl font-semibold transition-all border shrink-0",
                 selectedSection === "all"
                   ? "bg-blue-600 text-white border-blue-600 shadow-sm"
                   : "bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100 hover:border-slate-300"
               )}
             >
-              सबै प्रश्नहरू ({allQuestions.length})
+              All Questions ({allQuestions.length})
             </button>
             {sections.map((sec) => {
               const isSelected = selectedSection === sec.name;
@@ -221,8 +221,8 @@ export default function ImportantQuestionsPage() {
                 setSearchQuery(e.target.value);
                 setCurrentPage(1);
               }}
-              placeholder="नेपाली वा अंग्रेजीमा खोज्नुहोस् (उदा. जेब्रा क्रस, बत्ती, helmet...)"
-              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
+              placeholder="Search in English or Nepali (e.g., zebra cross, helmet, engine, बत्ती...)"
+              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-8 py-2 text-slate-800 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             {searchQuery && (
               <button
@@ -242,18 +242,18 @@ export default function ImportantQuestionsPage() {
                 setStatusFilter(e.target.value as any);
                 setCurrentPage(1);
               }}
-              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500 font-devanagari"
+              className="w-full text-xs sm:text-sm font-medium bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="all">सबै प्रश्नहरू (All Status)</option>
-              <option value="attempted">अभ्यास गरिएका (Practiced)</option>
-              <option value="unattempted">बाँकी प्रश्नहरू (Unpracticed)</option>
-              <option value="bookmarked">सुरक्षित (Bookmarked)</option>
+              <option value="all">All Questions (All Status)</option>
+              <option value="attempted">Practiced Questions</option>
+              <option value="unattempted">Unpracticed (New)</option>
+              <option value="bookmarked">Bookmarked (Saved)</option>
             </select>
           </div>
 
           {/* Items per page */}
           <div className="md:col-span-2 flex items-center justify-end gap-1.5 text-xs text-slate-500">
-            <span>प्रति पृष्ठ:</span>
+            <span>Per page:</span>
             <select
               value={itemsPerPage}
               onChange={(e) => {
@@ -274,7 +274,7 @@ export default function ImportantQuestionsPage() {
         {/* Quick Suggestion Pills */}
         <div className="flex flex-wrap items-center gap-1.5 pt-1">
           <span className="text-[11px] font-medium text-slate-400 flex items-center gap-1 mr-1">
-            प्रमुख विषय:
+            Key Topics:
           </span>
           {POPULAR_SEARCH_TAGS.map((tag) => (
             <button
@@ -294,13 +294,13 @@ export default function ImportantQuestionsPage() {
         {/* Count Bar */}
         <div className="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
           <span>
-            कुल <strong>{filteredQuestions.length}</strong> प्रश्नहरू मध्ये (पृष्ठ {validCurrentPage} / {totalPages})
-            {searchQuery && ` — "${searchQuery}" को नतिजा`}
+            Total <strong>{filteredQuestions.length}</strong> questions found (Page {validCurrentPage} of {totalPages})
+            {searchQuery && ` — results for "${searchQuery}"`}
           </span>
         </div>
       </div>
 
-      {/* Questions List (Matching nepallicense.com clean layout) */}
+      {/* Questions List */}
       <div className="space-y-4">
         {paginatedQuestions.map((q) => {
           const isQBookmarked = isBookmarked(q.number);
@@ -323,7 +323,7 @@ export default function ImportantQuestionsPage() {
               <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white font-bold text-xs tracking-wide">
-                    प्रश्न नं. {q.number}
+                    Question #{q.number}
                   </span>
                   <span className="text-xs text-slate-600 font-medium bg-slate-100 px-2 py-0.5 rounded-lg font-devanagari">
                     {q.section}
@@ -332,13 +332,13 @@ export default function ImportantQuestionsPage() {
                   {userAttempt && (
                     <span
                       className={cn(
-                        "text-[11px] font-semibold px-2 py-0.5 rounded-lg font-devanagari",
+                        "text-[11px] font-semibold px-2 py-0.5 rounded-lg",
                         userAttempt.isCorrect
                           ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
                           : "bg-rose-50 text-rose-700 border border-rose-200"
                       )}
                     >
-                      {userAttempt.isCorrect ? "पहिले सही गरिएको" : "पहिले गलत भएको"}
+                      {userAttempt.isCorrect ? "Previously Correct" : "Needs Review"}
                     </span>
                   )}
                 </div>
@@ -352,7 +352,7 @@ export default function ImportantQuestionsPage() {
                         ? "text-amber-600 bg-amber-50 ring-1 ring-amber-300"
                         : "text-slate-400 hover:text-slate-700 hover:bg-slate-100"
                     )}
-                    title={isQBookmarked ? "सुरक्षित सूचीबाट हटाउनुहोस्" : "प्रश्न सुरक्षित राख्नुहोस्"}
+                    title={isQBookmarked ? "Remove Bookmark" : "Save Question"}
                   >
                     <Bookmark className={cn("w-4 h-4", isQBookmarked ? "fill-current text-amber-500" : "")} />
                   </button>
@@ -367,12 +367,12 @@ export default function ImportantQuestionsPage() {
                 </div>
               )}
 
-              {/* Question Text */}
+              {/* Question Text (Authentic Nepali) */}
               <div className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed font-devanagari">
                 {q.question}
               </div>
 
-              {/* Multiple Choice Options List */}
+              {/* Multiple Choice Options List (Authentic Nepali) */}
               {q.options.length > 0 ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                   {q.options.map((opt) => {
@@ -425,22 +425,22 @@ export default function ImportantQuestionsPage() {
                 </div>
               ) : null}
 
-              {/* Answer Callout (Clean nepallicense.com style answer box) */}
+              {/* Answer Callout */}
               <div className="pt-2 border-t border-slate-100 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                 {isAnswerRevealed ? (
-                  <div className="p-2.5 px-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs sm:text-sm text-emerald-950 font-devanagari flex-1">
+                  <div className="p-2.5 px-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 text-xs sm:text-sm text-emerald-950 flex-1">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                     <span>
-                      आधिकारिक सही उत्तर: विकल्प <strong>({q.correctAnswerKey}) {q.correctAnswerText || "(स्रोत बमोजिम)"}</strong>
+                      Official Correct Answer: Option <strong>({q.correctAnswerKey}) <span className="font-devanagari">{q.correctAnswerText || "(स्रोत बमोजिम)"}</span></strong>
                     </span>
                   </div>
                 ) : (
                   <button
                     onClick={() => toggleSingleAnswer(q.number)}
-                    className="p-2 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors self-start font-devanagari"
+                    className="p-2 px-3 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-xl text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors self-start"
                   >
                     <Eye className="w-3.5 h-3.5 text-blue-600" />
-                    <span>उत्तर हेर्नुहोस् (Show Answer)</span>
+                    <span>Show Answer</span>
                   </button>
                 )}
 
@@ -448,16 +448,16 @@ export default function ImportantQuestionsPage() {
                   {!showAllAnswers && isAnswerRevealed && (
                     <button
                       onClick={() => toggleSingleAnswer(q.number)}
-                      className="text-xs text-slate-400 hover:text-slate-600 font-medium px-2 py-1 font-devanagari"
+                      className="text-xs text-slate-400 hover:text-slate-600 font-medium px-2 py-1"
                     >
-                      लुकाउनुहोस्
+                      Hide
                     </button>
                   )}
                   <Link
                     href={`/practice?question=${q.number}`}
-                    className="p-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors font-devanagari"
+                    className="p-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors"
                   >
-                    <span>अभ्यास गर्नुहोस्</span>
+                    <span>Practice</span>
                     <ArrowRight className="w-3 h-3 text-blue-600" />
                   </Link>
                 </div>
@@ -468,11 +468,11 @@ export default function ImportantQuestionsPage() {
 
         {/* Empty Search Result */}
         {filteredQuestions.length === 0 && (
-          <div className="p-12 bg-white rounded-2xl border border-slate-200 text-center space-y-3 shadow-sm font-devanagari">
+          <div className="liquid-glass-card p-12 text-center space-y-3 shadow-sm">
             <HelpCircle className="w-10 h-10 text-slate-300 mx-auto" />
-            <h3 className="text-base font-bold text-slate-800">कुनै प्रश्न भेटिएन</h3>
+            <h3 className="text-base font-bold text-slate-800">No Questions Found</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
-              तपाईंले खोज्नुभएको &quot;{searchQuery}&quot; अनुसार कुनै प्रश्न फेला परेन। कृपया अर्को शब्द खोज्नुहोस् वा फिल्टर रिसेट गर्नुहोस्।
+              We couldn&apos;t find any questions matching &quot;{searchQuery}&quot;. Please try a different keyword or reset filters.
             </p>
             <Button
               variant="outline"
@@ -484,7 +484,7 @@ export default function ImportantQuestionsPage() {
               }}
               className="rounded-xl font-semibold text-xs"
             >
-              फिल्टर रिसेट गर्नुहोस्
+              Reset Filters
             </Button>
           </div>
         )}
@@ -492,7 +492,7 @@ export default function ImportantQuestionsPage() {
 
       {/* Pagination Controls */}
       {totalPages > 1 && (
-        <div className="liquid-glass-card p-3.5 flex items-center justify-between gap-4 font-devanagari">
+        <div className="liquid-glass-card p-3.5 flex items-center justify-between gap-4">
           <Button
             variant="outline"
             size="sm"
@@ -501,11 +501,11 @@ export default function ImportantQuestionsPage() {
             className="gap-1.5 rounded-xl text-xs font-semibold"
           >
             <ChevronLeft className="w-4 h-4" />
-            <span>अघिल्लो (Previous)</span>
+            <span>Previous</span>
           </Button>
 
           <div className="text-xs font-semibold text-slate-700">
-            पृष्ठ {validCurrentPage} / {totalPages}
+            Page {validCurrentPage} of {totalPages}
           </div>
 
           <Button
@@ -515,7 +515,7 @@ export default function ImportantQuestionsPage() {
             disabled={validCurrentPage >= totalPages}
             className="gap-1.5 rounded-xl text-xs font-semibold"
           >
-            <span>पछिल्लो (Next)</span>
+            <span>Next</span>
             <ChevronRight className="w-4 h-4" />
           </Button>
         </div>
