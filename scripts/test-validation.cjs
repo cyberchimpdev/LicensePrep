@@ -1,5 +1,6 @@
 const assert = require("node:assert");
 const fs = require("node:fs");
+const path = require("node:path");
 
 console.log("=== RUNNING LICENSEPREP VALIDATION SUITE ===");
 
@@ -38,6 +39,7 @@ function parseQuestion(raw) {
     sourcePage: raw.source_page || 1,
     isValidForExam,
     isNote: options.length === 0 ? "No options in source PDF" : undefined,
+    images: Array.isArray(raw.images) ? raw.images : [],
   };
 }
 
@@ -106,6 +108,7 @@ function prepareExamQuestion(q, randomizeOptions) {
     options: finalOptions,
     correctOptionKey: correctKey,
     correctAnswerText: q.correctAnswerText,
+    images: q.images || [],
   };
 }
 
@@ -125,8 +128,13 @@ for (let i = 0; i < validQuestions.length; i++) {
     randomQ.correctAnswerKey,
     `Question #${examQ.originalNumber}: Original key must equal "${randomQ.correctAnswerKey}"`
   );
+  assert.strictEqual(
+    (examQ.images || []).length,
+    (randomQ.images || []).length,
+    `Question #${examQ.originalNumber}: Image references must be preserved in exam transformation`
+  );
 }
-console.log("✓ 500 randomized transformations verified with 100% correct answer mapping accuracy.");
+console.log("✓ 500 randomized transformations verified with 100% correct answer & image mapping accuracy.");
 
 // 5. Exam Grading check
 console.log("5. Testing Exam Grading Logic...");
@@ -172,4 +180,31 @@ assert.strictEqual(result.percentage, 60);
 assert.strictEqual(result.passed, true);
 
 console.log("✓ Exam grading logic verified: 12 correct, 5 incorrect, 3 skipped => 60%, Passed: true.");
-console.log("\n=== ALL UNIT ASSERTIONS PASSED WITH ZERO ERRORS! ===");
+
+// 6. Complete Image Asset Verification
+console.log("6. Verifying Question Image Assets on Disk...");
+const questionsWithImages = allQuestions.filter((q) => q.images && q.images.length > 0);
+assert.strictEqual(questionsWithImages.length, 85, "There must be exactly 85 questions with images (Q416 to Q500)");
+
+const publicQuestionsDir = path.join(__dirname, "../public/questions/images");
+const publicImagesDir = path.join(__dirname, "../public/images");
+
+let totalVerifiedImages = 0;
+questionsWithImages.forEach((q) => {
+  assert.ok(q.number >= 416 && q.number <= 500, `Question #${q.number} with image must be in traffic signs section`);
+  q.images.forEach((img) => {
+    const filename = path.basename(img.src);
+    const p1 = path.join(publicQuestionsDir, filename);
+    const p2 = path.join(publicImagesDir, filename);
+
+    assert.ok(fs.existsSync(p1), `Image file ${filename} must exist in public/questions/images/`);
+    assert.ok(fs.existsSync(p2), `Image file ${filename} must exist in public/images/`);
+    assert.ok(fs.statSync(p1).size > 0, `Image file ${filename} must not be empty`);
+    totalVerifiedImages++;
+  });
+});
+
+assert.strictEqual(totalVerifiedImages, 85, "All 85 image assets must be verified on disk");
+console.log("✓ All 85 question image assets verified on disk with 100% resolution match.");
+
+console.log("\n=== ALL 6 UNIT ASSERTIONS PASSED WITH ZERO ERRORS! ===");

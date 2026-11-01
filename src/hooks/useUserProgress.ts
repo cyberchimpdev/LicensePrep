@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { UserProgress, AttemptRecord } from "@/types/question";
+import { UserProgress, AttemptRecord, ExamResult } from "@/types/question";
 import {
   getUserProgress,
   recordAttempt as storageRecordAttempt,
@@ -83,7 +83,7 @@ export function useUserProgress() {
       attemptedCount > 0 ? Math.round((correctCount / attemptedCount) * 100) : 0;
     const bookmarksCount = progress.bookmarks.length;
     const examsTaken = progress.examHistory.length;
-    const examsPassed = progress.examHistory.filter((e) => e.passed).length;
+    const examsPassed = progress.examHistory.filter((e: ExamResult) => e.passed).length;
 
     // Calculate section stats
     const sections = getSections();

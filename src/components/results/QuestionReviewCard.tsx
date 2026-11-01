@@ -4,6 +4,7 @@ import React from "react";
 import { ExamQuestion } from "@/types/question";
 import { Check, X, Bookmark, HelpCircle } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
+import { QuestionImage } from "@/components/questions/QuestionImage";
 import { cn } from "@/lib/utils";
 
 interface QuestionReviewCardProps {
@@ -74,9 +75,12 @@ export function QuestionReviewCard({
       </div>
 
       {/* Question Text */}
-      <div className="text-base font-bold text-slate-900 leading-relaxed">
+      <div className="text-base font-bold text-slate-900 leading-relaxed font-devanagari">
         {question.question}
       </div>
+
+      {/* Associated Question Image */}
+      <QuestionImage question={question} size="sm" />
 
       {/* Options List */}
       <div className="space-y-2 pt-1">

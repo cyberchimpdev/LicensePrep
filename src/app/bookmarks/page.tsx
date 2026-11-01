@@ -7,6 +7,7 @@ import { useUserProgress } from "@/hooks/useUserProgress";
 import { getAllQuestions } from "@/lib/question-parser";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { QuestionImage } from "@/components/questions/QuestionImage";
 import { Bookmark, BookOpen, Trash2, ArrowRight, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -163,6 +164,9 @@ export default function BookmarksPage() {
               <div className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed font-devanagari">
                 {q.question}
               </div>
+
+              {/* Associated Question Image */}
+              <QuestionImage question={q} size="md" />
 
               {/* Options */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Question } from "@/types/question";
 import { Bookmark, CheckCircle2, XCircle, RotateCcw, AlertCircle, HelpCircle, CornerDownLeft } from "lucide-react";
 import { OptionList } from "./OptionList";
+import { QuestionImage } from "./QuestionImage";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { checkPracticeAnswer } from "@/lib/answer-checker";
@@ -88,7 +89,6 @@ export function QuestionCard({
       }
 
       if (!isSubmitted) {
-        // Option select: 1/2/3/4 or a/b/c/d
         const keyMap: Record<string, number> = {
           "1": 0, "2": 1, "3": 2, "4": 3,
           "a": 0, "b": 1, "c": 2, "d": 3,
@@ -113,9 +113,9 @@ export function QuestionCard({
   }, [isSubmitted, selectedKey, question.options, handleSubmit]);
 
   return (
-    <div className="liquid-glass-card p-5 sm:p-7 space-y-5">
+    <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-7 space-y-5 shadow-sm">
       {/* Header Info */}
-      <div className="flex items-center justify-between gap-3 border-b border-slate-200/60 pb-3">
+      <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div className="flex flex-wrap items-center gap-2">
           <span className="px-2.5 py-0.5 rounded-lg bg-blue-600 text-white font-bold text-xs sm:text-sm tracking-wide">
             Question #{question.number}
@@ -159,6 +159,9 @@ export function QuestionCard({
         {question.question}
       </div>
 
+      {/* Associated Question Image (Traffic Signs, Markings, Road Diagrams) */}
+      <QuestionImage question={question} size="md" />
+
       {/* Options List */}
       <OptionList
         options={question.options}
@@ -170,7 +173,7 @@ export function QuestionCard({
       />
 
       {/* Action / Feedback Section */}
-      <div className="pt-2 border-t border-slate-200/60">
+      <div className="pt-2 border-t border-slate-100">
         {!isSubmitted ? (
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <span className="text-xs text-slate-400 hidden sm:inline flex items-center gap-1">

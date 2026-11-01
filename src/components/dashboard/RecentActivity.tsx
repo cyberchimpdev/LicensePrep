@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { UserProgress } from "@/types/question";
+import { UserProgress, ExamResult } from "@/types/question";
 import { Award, Clock, ArrowRight, RotateCcw, AlertTriangle, CheckCircle, XCircle, Play, History } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -116,7 +116,7 @@ export function RecentActivity({ progress, onReset }: RecentActivityProps) {
             </div>
           ) : (
             <div className="divide-y divide-slate-100 overflow-y-auto max-h-52 pr-1">
-              {examHistory.slice(0, 5).map((exam) => (
+              {examHistory.slice(0, 5).map((exam: ExamResult) => (
                 <div
                   key={exam.id}
                   className="py-2.5 flex items-center justify-between gap-3 group hover:bg-slate-50/70 rounded-xl px-2 -mx-2 transition-colors cursor-pointer"

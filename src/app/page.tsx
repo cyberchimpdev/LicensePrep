@@ -32,7 +32,7 @@ import { cn } from "@/lib/utils";
 
 export default function HomePage() {
   const { progress, stats, isLoaded, resetProgress } = useUserProgress();
-  const [previewSelectedOption, setPreviewSelectedOption] = useState<number>(3);
+  const [previewSelectedOption, setPreviewSelectedOption] = useState<number>(2);
 
   return (
     <PageContainer size="wide" className="space-y-12 sm:space-y-16 py-6 sm:py-8">
@@ -53,7 +53,7 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-xl">
-              Learn traffic rules, practice real questions, and test your knowledge with interactive mock examinations.
+              Practice driving license questions, understand traffic signs, and prepare confidently with interactive mock examinations.
             </p>
 
             {/* Primary Action Buttons */}
@@ -112,7 +112,7 @@ export default function HomePage() {
               {/* Question Metadata */}
               <div className="flex items-center justify-between text-xs">
                 <span className="px-2 py-0.5 rounded-md bg-blue-50 text-blue-700 font-bold">
-                  Question 14 of 20
+                  Question #416 • Traffic Sign (ट्राफिक संकेत)
                 </span>
                 <span className="text-slate-400 font-medium">
                   5 Marks • 50% to Pass
@@ -121,16 +121,26 @@ export default function HomePage() {
 
               {/* Simulated Authentic Nepali Question */}
               <div className="text-sm sm:text-base font-bold text-slate-900 leading-snug font-devanagari">
-                सवारी चलाउँदा के कुरामा विशेष ध्यान दिनुपर्छ?
+                यस्तो ट्राफिक चिन्हले केलाई जनाउँछ ?
+              </div>
+
+              {/* Road Sign Image from Dataset */}
+              <div className="flex items-center justify-center p-3 rounded-xl bg-slate-50 border border-slate-200">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/questions/images/question-416-image-1.png"
+                  alt="प्रश्न 416 को ट्राफिक संकेत चित्र (पार्किङ्ग स्थल)"
+                  className="h-20 w-auto object-contain drop-shadow-sm select-none"
+                />
               </div>
 
               {/* Sample Interactive Options */}
-              <div className="space-y-2 pt-1 font-devanagari text-xs sm:text-sm">
+              <div className="grid grid-cols-2 gap-2 pt-1 font-devanagari text-xs">
                 {[
-                  { key: "क", text: "ट्राफिक संकेत र सडक नियम" },
-                  { key: "ख", text: "सवारीको गति र दुरी नियन्त्रण" },
-                  { key: "ग", text: "पैदलयात्रु तथा अन्य सवारीको सुरक्षा" },
-                  { key: "घ", text: "माथिका सबै (All of the Above)", isCorrect: true },
+                  { key: "क", text: "वर्गाकार" },
+                  { key: "ख", text: "आयताकार" },
+                  { key: "ग", text: "पार्किङ्ग स्थल", isCorrect: true },
+                  { key: "घ", text: "अस्पताल" },
                 ].map((opt, idx) => {
                   const isSelected = previewSelectedOption === idx;
                   return (

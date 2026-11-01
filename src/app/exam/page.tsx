@@ -10,6 +10,7 @@ import { saveExamResult, saveActiveExam, getActiveExam, clearActiveExam } from "
 import { ExamHeader } from "@/components/exam/ExamHeader";
 import { ExamPalette } from "@/components/exam/ExamPalette";
 import { ExamSummaryModal } from "@/components/exam/ExamSummaryModal";
+import { QuestionImage } from "@/components/questions/QuestionImage";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import {
@@ -424,6 +425,9 @@ export default function ExamPage() {
               <div className="text-base sm:text-xl font-bold text-slate-900 leading-relaxed font-devanagari">
                 {currentQ.question}
               </div>
+
+              {/* Associated Question Image (Traffic Signs, Signals, Diagrams) */}
+              <QuestionImage question={currentQ} size="md" />
 
               {/* Options (Authentic Nepali with letter badge) */}
               <div className="space-y-2.5 pt-1">

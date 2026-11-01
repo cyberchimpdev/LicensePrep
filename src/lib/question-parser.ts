@@ -54,6 +54,7 @@ export function parseQuestion(raw: RawQuestion): Question {
     isValidForExam,
     isNote,
     explanation: raw.explanation ? sanitizeText(raw.explanation) : undefined,
+    images: Array.isArray(raw.images) ? raw.images : [],
   };
 }
 
@@ -100,22 +101,15 @@ export function getSections(): { name: string; count: number; questionRange: { f
   }));
 }
 
-export function getDatasetMetadata() {
-  return {
-    title: dataset.title || "सवारी चालक अनुमतिपत्र लिखित परीक्षा वस्तुगत प्रश्नोत्तर",
-    language: dataset.language || "ne",
-    totalQuestions: dataset.total_questions || dataset.questions?.length || 0,
-    sourceFile: dataset.source_file || "",
-    notes: dataset.notes || [],
-  };
-}
-
+/**
+ * Filter questions by query string and options
+ */
 export function searchQuestions(
   query: string,
   filter?: {
     section?: string;
-    isValidOnly?: boolean;
-    questionNumbers?: number[];
+    validExamOnly?: boolean;
+    hasImageOnly?: boolean;
   }
 ): Question[] {
   let list = getAllQuestions();
@@ -124,31 +118,39 @@ export function searchQuestions(
     list = list.filter((q) => q.section === filter.section);
   }
 
-  if (filter?.isValidOnly) {
+  if (filter?.validExamOnly) {
     list = list.filter((q) => q.isValidForExam);
   }
 
-  if (filter?.questionNumbers) {
-    const numSet = new Set(filter.questionNumbers);
-    list = list.filter((q) => numSet.has(q.number));
+  if (filter?.hasImageOnly) {
+    list = list.filter((q) => q.images && q.images.length > 0);
   }
 
-  if (!query.trim()) {
-    return list;
-  }
+  const q = query.trim();
+  if (!q) return list;
 
-  return list.filter((q) => {
-    // Search in question text
-    if (matchesQuery(q.question, query)) return true;
-    // Search in question number
-    if (q.number.toString().includes(query)) return true;
-    // Search in options
-    for (const opt of q.options) {
-      if (matchesQuery(opt.text, query)) return true;
+  return list.filter((question) => {
+    // Check question number if query is numeric
+    if (!isNaN(Number(q)) && question.number === Number(q)) {
+      return true;
     }
-    // Search in section
-    if (matchesQuery(q.section, query)) return true;
+
+    // Check question text
+    if (matchesQuery(question.question, q)) return true;
+
+    // Check options
+    for (const opt of question.options) {
+      if (matchesQuery(opt.text, q)) return true;
+    }
+
+    // Check section name
+    if (matchesQuery(question.section, q)) return true;
+
+    // Check explanation if present
+    if (question.explanation && matchesQuery(question.explanation, q)) {
+      return true;
+    }
+
     return false;
   });
 }
-

@@ -17,6 +17,12 @@ export interface RawSection {
   count: number;
 }
 
+export interface QuestionImage {
+  src: string; // e.g. "images/question-416-image-1.png"
+  alt: string; // e.g. "प्रश्न 416 को चित्र"
+  source_page?: number;
+}
+
 export interface RawQuestion {
   number: number;
   section: string;
@@ -25,6 +31,7 @@ export interface RawQuestion {
   correct_answer: RawAnswer;
   source_page: number;
   explanation?: string;
+  images?: QuestionImage[];
 }
 
 export interface RawDataset {
@@ -54,6 +61,7 @@ export interface Question {
   isValidForExam: boolean; // false for edge cases like Q290
   explanation?: string;
   isNote?: string;
+  images?: QuestionImage[];
 }
 
 export interface ExamConfig {
@@ -83,6 +91,7 @@ export interface ExamQuestion {
   isFlagged: boolean;
   sourcePage: number;
   explanation?: string;
+  images?: QuestionImage[];
 }
 
 export interface ExamResultSectionScore {
@@ -100,39 +109,43 @@ export interface ExamResult {
   timestamp: number;
   dateStr: string;
   totalQuestions: number;
+  score: number;
+  percentage: number;
+  passingPercentage: number;
+  passed: boolean;
+  timeSpentSeconds: number;
+  timeLimitSeconds?: number;
   correctCount: number;
   incorrectCount: number;
   skippedCount: number;
-  score: number;
-  percentage: number;
-  passed: boolean;
-  passingPercentage: number;
-  timeSpentSeconds: number;
-  timeLimitSeconds: number;
   questions: ExamQuestion[];
   sectionBreakdown: ExamResultSectionScore[];
 }
 
 export interface AttemptRecord {
-  questionNumber: number;
+  questionNumber?: number;
   answeredKey: string;
   isCorrect: boolean;
   timestamp: number;
 }
 
-export interface UserProgress {
+export interface UserProgressData {
   version: number;
+  bookmarks: number[]; // question numbers
   attemptedQuestions: Record<number, AttemptRecord>;
-  bookmarks: number[];
   examHistory: ExamResult[];
-  lastPractice: {
+  lastPractice?: {
+    questionNumber: number;
+    section: string | null;
+    mode?: "sequential" | "random";
+    timestamp: number;
+  } | null;
+  lastPracticeSession?: {
     questionNumber: number;
     section: string | null;
     mode: "sequential" | "random";
     timestamp: number;
-  } | null;
+  };
 }
 
-export type PracticeFilter = "all" | "unanswered" | "incorrect" | "bookmarked";
-export type PracticeSort = "sequential" | "random";
-
+export type UserProgress = UserProgressData;

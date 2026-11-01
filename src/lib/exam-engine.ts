@@ -5,7 +5,7 @@ import { shuffleArray } from "./utils";
 export const DEFAULT_EXAM_CONFIGS: ExamConfig[] = [
   {
     id: "standard",
-    title: "आधिकारिक स्तर नमुना परीक्षा (Standard Official)",
+    title: "Standard Official Exam (20 Questions)",
     questionCount: 20,
     timeLimitMinutes: 30,
     passingPercentage: 50,
@@ -14,7 +14,7 @@ export const DEFAULT_EXAM_CONFIGS: ExamConfig[] = [
   },
   {
     id: "quick",
-    title: "द्रुत नमुना परीक्षा (Quick Sprint)",
+    title: "Quick Sprint Test (10 Questions)",
     questionCount: 10,
     timeLimitMinutes: 12,
     passingPercentage: 60,
@@ -23,7 +23,7 @@ export const DEFAULT_EXAM_CONFIGS: ExamConfig[] = [
   },
   {
     id: "comprehensive",
-    title: "विस्तृत नमुना परीक्षा (Comprehensive Practice)",
+    title: "Comprehensive Practice Drill (50 Questions)",
     questionCount: 50,
     timeLimitMinutes: 60,
     passingPercentage: 60,
@@ -103,10 +103,9 @@ export function prepareExamQuestion(
     options: finalOptions,
     correctOptionKey: correctKey,
     correctAnswerText: q.correctAnswerText,
-    userSelectedKey: undefined,
     isFlagged: false,
     sourcePage: q.sourcePage,
     explanation: q.explanation,
+    images: q.images || [],
   };
 }
-

@@ -7,6 +7,7 @@ import { getAllQuestions, getSections, searchQuestions } from "@/lib/question-pa
 import { useUserProgress } from "@/hooks/useUserProgress";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
+import { QuestionImage } from "@/components/questions/QuestionImage";
 import {
   Search,
   Eye,
@@ -371,6 +372,9 @@ export default function ImportantQuestionsPage() {
               <div className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed font-devanagari">
                 {q.question}
               </div>
+
+              {/* Associated Question Image (Traffic Signs, Signals, Diagrams) */}
+              <QuestionImage question={q} size="md" />
 
               {/* Multiple Choice Options List (Authentic Nepali) */}
               {q.options.length > 0 ? (
