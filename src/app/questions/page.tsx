@@ -22,6 +22,7 @@ import {
   Sparkles,
   ArrowRight,
   RotateCcw,
+  Shuffle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -121,8 +122,19 @@ export default function ImportantQuestionsPage() {
             </p>
           </div>
 
-          {/* Quick Answer Toggle Action */}
-          <div className="flex items-center gap-2 self-start lg:self-auto">
+          {/* Quick Answer Toggle Action & Practice Link */}
+          <div className="flex flex-wrap items-center gap-2 self-start lg:self-auto">
+            <Link href="/practice">
+              <Button
+                variant="outline"
+                size="sm"
+                className="gap-1.5 font-semibold text-xs rounded-xl border-zinc-200"
+              >
+                <Shuffle className="w-3.5 h-3.5 text-blue-600" />
+                <span>अनियमित २० प्रश्न अभ्यास (Random Practice)</span>
+              </Button>
+            </Link>
+
             <Button
               variant={showAllAnswers ? "primary" : "outline"}
               size="sm"

@@ -2,10 +2,11 @@
 
 import React from "react";
 import { ExamResult } from "@/types/question";
-import { CheckCircle2, XCircle, Clock, RotateCcw, Home, Filter, BookOpen } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, RotateCcw, Home, Filter, BookOpen, Award } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { formatSeconds } from "@/lib/utils";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface ResultSummaryCardProps {
   result: ExamResult;
@@ -24,159 +25,146 @@ export function ResultSummaryCard({
   const isDistinction = result.percentage >= 80;
 
   return (
-    <div className="bg-white rounded-3xl border border-slate-200/90 shadow-card overflow-hidden">
-      {/* Top Banner */}
+    <div className="bg-white rounded-xl border border-zinc-200 shadow-sm overflow-hidden font-devanagari">
+      {/* Top Banner - Clean flat modern surface */}
       <div
-        className={`p-6 sm:p-10 text-white flex flex-col sm:flex-row items-center justify-between gap-6 ${
-          isPassed
-            ? "bg-gradient-to-br from-emerald-600 via-teal-700 to-navy-900"
-            : "bg-gradient-to-br from-rose-600 via-red-700 to-navy-900"
-        }`}
+        className={cn(
+          "p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6",
+          isPassed ? "bg-emerald-700" : "bg-rose-700"
+        )}
       >
-        <div className="flex flex-col sm:flex-row items-center gap-5 text-center sm:text-left">
-          <div className="w-20 h-20 rounded-3xl bg-white/10 backdrop-blur-md flex items-center justify-center shrink-0 border border-white/20 shadow-inner">
+        <div className="flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
+          <div className="w-16 h-16 rounded-xl bg-white/10 flex items-center justify-center shrink-0 border border-white/20">
             {isPassed ? (
-              <CheckCircle2 className="w-10 h-10 text-emerald-200" />
+              <CheckCircle2 className="w-8 h-8 text-emerald-200" />
             ) : (
-              <XCircle className="w-10 h-10 text-rose-200" />
+              <XCircle className="w-8 h-8 text-rose-200" />
             )}
           </div>
           <div>
-            <div className="inline-block px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-white/20 text-white mb-2 backdrop-blur-sm">
+            <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-white/20 text-white mb-1.5">
               {isDistinction
                 ? "उत्कृष्ट नतिजा (Distinction)"
                 : isPassed
                 ? "उत्तीर्ण (Passed)"
                 : "पुनः अभ्यास आवश्यक (Needs Practice)"}
             </div>
-            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight">
-              {isPassed ? "बधाई छ! तपाईं उत्तीर्ण हुनुभयो।" : "तपाईं यस पटक अनुत्तीर्ण हुनुभयो।"}
+            <h2 className="text-xl sm:text-3xl font-bold tracking-tight">
+              {isPassed ? "बधाई छ! तपाईं लिखित परीक्षामा उत्तीर्ण हुनुभयो।" : "यस पटक अनुत्तीर्ण हुनुभयो।"}
             </h2>
-            <p className="text-xs sm:text-sm text-white/80 mt-1 max-w-lg leading-relaxed">
+            <p className="text-xs sm:text-sm text-white/90 mt-1 max-w-lg leading-relaxed">
               {isPassed
-                ? `तपाईंले ${result.percentage}% अङ्क प्राप्त गर्नुभएको छ। आधिकारिक परीक्षामा उत्तीर्ण हुन कम्तीमा ${result.passingPercentage}% अङ्क आवश्यक हुन्छ।`
-                : `तपाईंले ${result.percentage}% अङ्क प्राप्त गर्नुभयो। उत्तीर्ण हुन ${result.passingPercentage}% आवश्यक हुन्छ। तल दिइएका गलत प्रश्नहरू पुनः अभ्यास गर्नुहोस्।`}
+                ? `तपाईंले ${result.percentage}% अङ्क प्राप्त गर्नुभएको छ। यातायात व्यवस्था विभाग (DOTM) को उत्तीर्ण मापदण्ड ५०% हो।`
+                : `तपाईंले ${result.percentage}% अङ्क प्राप्त गर्नुभयो। उत्तीर्ण हुन कम्तीमा ${result.passingPercentage}% आवश्यक पर्दछ।`}
             </p>
           </div>
         </div>
 
-        {/* Big Score Box */}
-        <div className="bg-white/15 backdrop-blur-md rounded-3xl p-5 sm:p-6 border border-white/20 text-center shrink-0 min-w-[160px] shadow-lg">
-          <div className="text-[11px] font-bold text-white/80 uppercase tracking-wider">
-            Total Score
+        {/* Score Box */}
+        <div className="bg-white/10 rounded-xl p-4 sm:p-5 border border-white/20 text-center shrink-0 min-w-[150px]">
+          <div className="text-[11px] font-medium text-white/80 uppercase tracking-wider">
+            प्राप्ताङ्क (Score)
           </div>
-          <div className="text-4xl sm:text-5xl font-extrabold text-white mt-1">
+          <div className="text-3xl sm:text-4xl font-bold text-white mt-0.5 font-sans">
             {result.score}
-            <span className="text-xl font-normal text-white/70">
+            <span className="text-lg font-normal text-white/70">
               /{result.totalQuestions}
             </span>
           </div>
-          <div className="text-xs font-bold text-white/90 mt-1.5 px-2.5 py-0.5 rounded-full bg-white/15 inline-block">
+          <div className="text-xs font-semibold text-white/90 mt-1 px-2 py-0.5 rounded-full bg-white/15 inline-block font-sans">
             {result.percentage}% Accuracy
           </div>
         </div>
       </div>
 
       {/* Metrics Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-slate-100 border-b border-slate-100 bg-slate-50/50">
-        <div className="p-4 sm:p-5 text-center">
-          <span className="text-xs text-slate-500 font-semibold">Correct Answers</span>
-          <div className="text-2xl font-extrabold text-emerald-600 mt-0.5">
+      <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-zinc-100 border-b border-zinc-100 bg-zinc-50/50">
+        <div className="p-4 text-center">
+          <span className="text-xs text-zinc-500 font-medium">सही उत्तर (Correct)</span>
+          <div className="text-xl font-bold text-emerald-600 mt-0.5 font-sans">
             {result.correctCount}
           </div>
         </div>
-        <div className="p-4 sm:p-5 text-center">
-          <span className="text-xs text-slate-500 font-semibold">Incorrect Answers</span>
-          <div className="text-2xl font-extrabold text-rose-600 mt-0.5">
+        <div className="p-4 text-center">
+          <span className="text-xs text-zinc-500 font-medium">गलत उत्तर (Incorrect)</span>
+          <div className="text-xl font-bold text-rose-600 mt-0.5 font-sans">
             {result.incorrectCount}
           </div>
         </div>
-        <div className="p-4 sm:p-5 text-center">
-          <span className="text-xs text-slate-500 font-semibold">Unanswered</span>
-          <div className="text-2xl font-extrabold text-slate-600 mt-0.5">
+        <div className="p-4 text-center">
+          <span className="text-xs text-zinc-500 font-medium">हल नगरिएको (Skipped)</span>
+          <div className="text-xl font-bold text-zinc-600 mt-0.5 font-sans">
             {result.skippedCount}
           </div>
         </div>
-        <div className="p-4 sm:p-5 text-center">
-          <span className="text-xs text-slate-500 font-semibold">Time Elapsed</span>
-          <div className="text-2xl font-extrabold text-slate-800 mt-0.5 flex items-center justify-center gap-1.5">
-            <Clock className="w-5 h-5 text-slate-400" />
-            <span>{formatSeconds(result.timeSpentSeconds)}</span>
+        <div className="p-4 text-center">
+          <span className="text-xs text-zinc-500 font-medium">लागेको समय (Time Spent)</span>
+          <div className="text-xl font-bold text-blue-600 mt-0.5 font-sans">
+            {formatSeconds(result.timeSpentSeconds)}
           </div>
         </div>
       </div>
 
-      {/* Action Toolbar */}
-      <div className="p-4 sm:p-6 flex flex-wrap items-center justify-between gap-4">
-        {/* Review Filter Buttons */}
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-slate-500 font-bold flex items-center gap-1 mr-1">
-            <Filter className="w-3.5 h-3.5" /> Filter Review:
+      {/* Action Toolbar & Filters */}
+      <div className="p-4 sm:p-5 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-1.5 self-start sm:self-auto">
+          <span className="text-xs font-medium text-zinc-500 mr-1 flex items-center gap-1">
+            <Filter className="w-3.5 h-3.5" /> प्रश्न समीक्षा:
           </span>
           <button
             onClick={() => onFilterChange("all")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={cn(
+              "px-3 py-1 rounded-lg text-xs font-semibold transition-all border",
               activeFilter === "all"
-                ? "bg-navy-900 text-white shadow-sm"
-                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-            }`}
+                ? "bg-zinc-900 text-white border-zinc-900 shadow-sm"
+                : "bg-zinc-50 text-zinc-700 border-zinc-200 hover:bg-zinc-100"
+            )}
           >
-            All ({result.totalQuestions})
+            सबै ({result.totalQuestions})
           </button>
           <button
             onClick={() => onFilterChange("incorrect")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={cn(
+              "px-3 py-1 rounded-lg text-xs font-semibold transition-all border",
               activeFilter === "incorrect"
-                ? "bg-rose-600 text-white shadow-sm"
-                : "bg-rose-50 text-rose-700 hover:bg-rose-100"
-            }`}
+                ? "bg-rose-600 text-white border-rose-600 shadow-sm"
+                : "bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100"
+            )}
           >
-            Incorrect ({result.incorrectCount})
+            गलत मात्र ({result.incorrectCount})
           </button>
           <button
             onClick={() => onFilterChange("correct")}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
+            className={cn(
+              "px-3 py-1 rounded-lg text-xs font-semibold transition-all border",
               activeFilter === "correct"
-                ? "bg-emerald-600 text-white shadow-sm"
-                : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
-            }`}
+                ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
+                : "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+            )}
           >
-            Correct ({result.correctCount})
+            सही मात्र ({result.correctCount})
           </button>
-          {result.skippedCount > 0 && (
-            <button
-              onClick={() => onFilterChange("skipped")}
-              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all ${
-                activeFilter === "skipped"
-                  ? "bg-slate-800 text-white shadow-sm"
-                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-              }`}
-            >
-              Skipped ({result.skippedCount})
-            </button>
-          )}
         </div>
 
-        {/* Global CTA Buttons */}
-        <div className="flex items-center gap-2 w-full sm:w-auto">
+        <div className="flex items-center gap-2 self-end sm:self-auto">
           <Button
             variant="outline"
             size="sm"
             onClick={onRetry}
-            className="flex-1 sm:flex-none gap-2 rounded-xl font-bold"
+            className="gap-1.5 rounded-lg text-xs font-semibold"
           >
             <RotateCcw className="w-3.5 h-3.5" />
-            <span>Retake Exam</span>
+            <span>पुनः परीक्षा दिनुहोस्</span>
           </Button>
 
-          <Link href="/practice" className="flex-1 sm:flex-none">
+          <Link href="/practice">
             <Button
               variant="primary"
               size="sm"
-              className="w-full gap-2 rounded-xl font-bold bg-navy-900 hover:bg-navy-800"
+              className="gap-1.5 rounded-lg text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white"
             >
               <BookOpen className="w-3.5 h-3.5" />
-              <span>Continue Practice</span>
+              <span>अभ्यास सुरु गर्नुहोस्</span>
             </Button>
           </Link>
         </div>
