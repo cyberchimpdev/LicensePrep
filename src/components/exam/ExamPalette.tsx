@@ -4,7 +4,6 @@ import React from "react";
 import { ExamQuestion } from "@/types/question";
 import { Flag } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useLanguage } from "@/context/LanguageContext";
 
 interface ExamPaletteProps {
   questions: ExamQuestion[];
@@ -17,13 +16,11 @@ export function ExamPalette({
   currentIndex,
   onSelectQuestion,
 }: ExamPaletteProps) {
-  const { language, t } = useLanguage();
-
   return (
-    <div className="liquid-glass-card rounded-2xl p-4 sm:p-5 font-devanagari">
+    <div className="bg-white rounded-2xl border border-slate-200/90 shadow-subtle p-4 sm:p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-bold text-sm text-slate-900">{t.examGrid}</h3>
-        <span className="text-xs text-slate-500">{questions.length} {language === "ne" ? "प्रश्नहरू" : "Questions"}</span>
+        <h3 className="font-bold text-sm text-slate-900">Question Palette</h3>
+        <span className="text-xs text-slate-500">{questions.length} Questions</span>
       </div>
 
       {/* Grid of question buttons */}
@@ -33,10 +30,10 @@ export function ExamPalette({
           const isAnswered = Boolean(q.userSelectedKey);
           const isFlagged = q.isFlagged;
 
-          let btnClass = "bg-white/80 border-slate-200 text-slate-700 hover:bg-white";
+          let btnClass = "bg-white border-slate-200 text-slate-700 hover:bg-slate-100";
 
           if (isCurrent) {
-            btnClass = "border-blue-600 bg-blue-50 text-blue-900 ring-2 ring-blue-500 font-bold shadow-sm";
+            btnClass = "border-blue-600 bg-blue-50 text-blue-900 ring-2 ring-blue-500 font-bold";
           } else if (isFlagged) {
             btnClass = "border-amber-400 bg-amber-50 text-amber-900 font-medium";
           } else if (isAnswered) {
@@ -67,21 +64,22 @@ export function ExamPalette({
       <div className="mt-4 pt-3 border-t border-slate-100 grid grid-cols-2 gap-2 text-[11px] text-slate-600">
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-emerald-100 border border-emerald-400" />
-          <span>{language === "ne" ? "हल गरिएका" : "Answered"}</span>
+          <span>Answered</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-amber-100 border border-amber-400" />
-          <span>{language === "ne" ? "Flag गरिएका" : "Flagged"}</span>
+          <span>Flagged</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-white border border-slate-300" />
-          <span>{language === "ne" ? "बाँकी प्रश्न" : "Unanswered"}</span>
+          <span>Unanswered</span>
         </div>
         <div className="flex items-center gap-1.5">
           <div className="w-3 h-3 rounded bg-blue-100 border border-blue-600 ring-1 ring-blue-500" />
-          <span>{language === "ne" ? "हालको प्रश्न" : "Current"}</span>
+          <span>Current</span>
         </div>
       </div>
     </div>
   );
 }
+

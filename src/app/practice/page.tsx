@@ -12,7 +12,6 @@ import { shuffleArray } from "@/lib/utils";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
 import { saveLastPractice } from "@/lib/storage";
-import { useLanguage } from "@/context/LanguageContext";
 import {
   ChevronLeft,
   ChevronRight,
@@ -29,6 +28,13 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+const SET_SIZE_OPTIONS = [
+  { value: 20, label: "२० प्रश्नहरू (Real Exam Format)" },
+  { value: 10, label: "१० प्रश्नहरू (द्रुत अभ्यास)" },
+  { value: 50, label: "५० प्रश्नहरू (विस्तृत अभ्यास)" },
+  { value: 500, label: "सबै ५०० प्रश्नहरू (Full Bank)" },
+];
+
 function PracticeContent() {
   const searchParams = useSearchParams();
   const initialSection = searchParams.get("section") || "all";
@@ -37,7 +43,6 @@ function PracticeContent() {
     : null;
 
   const { progress, recordAttempt, toggleBookmark, isBookmarked } = useUserProgress();
-  const { language, t, translateCategory } = useLanguage();
 
   const [selectedSection, setSelectedSection] = useState<string>(initialSection);
   const [setSize, setSetSize] = useState<number>(20);
@@ -51,17 +56,6 @@ function PracticeContent() {
   const allQuestions = useMemo(() => getAllQuestions(), []);
   const validQuestions = useMemo(() => getValidExamQuestions(), []);
   const sections = useMemo(() => getSections(), []);
-
-  // Set size options localized
-  const setSizeOptions = useMemo(
-    () => [
-      { value: 20, label: language === "ne" ? "२० प्रश्नहरू (Real Exam Format)" : "20 Questions (Real Exam)" },
-      { value: 10, label: language === "ne" ? "१० प्रश्नहरू (द्रुत अभ्यास)" : "10 Questions (Quick Sprint)" },
-      { value: 50, label: language === "ne" ? "५० प्रश्नहरू (विस्तृत अभ्यास)" : "50 Questions (Comprehensive)" },
-      { value: 500, label: language === "ne" ? "सबै ५०० प्रश्नहरू (Full Bank)" : "All 500 Questions (Full Bank)" },
-    ],
-    [language]
-  );
 
   // Generate randomized question set based on selected size, category and filter
   const activeQuestionSet = useMemo(() => {
@@ -90,6 +84,7 @@ function PracticeContent() {
     }
 
     return pool;
+    // Dependency on randomSeed allows users to regenerate a fresh set with 1 click
   }, [validQuestions, selectedSection, filterType, setSize, randomSeed, progress.bookmarks, progress.attemptedQuestions]);
 
   // Set initial question if passed via URL query
@@ -148,7 +143,7 @@ function PracticeContent() {
     });
   };
 
-  // Keyboard navigation
+  // Keyboard navigation (ArrowLeft / ArrowRight)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
@@ -175,16 +170,16 @@ function PracticeContent() {
 
   return (
     <PageContainer size="narrow" className="space-y-5">
-      {/* Set Controls & Configuration Header with Liquid Glass */}
-      <div className="liquid-glass-card rounded-2xl p-4 sm:p-5 space-y-4 font-devanagari">
+      {/* Set Controls & Configuration Header */}
+      <div className="bg-white rounded-xl border border-zinc-200 p-4 sm:p-5 space-y-4 shadow-sm font-devanagari">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="space-y-0.5">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full liquid-glass-pill text-blue-700 text-xs font-semibold">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs font-semibold border border-blue-200">
               <Sparkles className="w-3.5 h-3.5 text-blue-600" />
-              <span>{language === "ne" ? "वास्तविक लिखित परीक्षा ढाँचा" : "Official DOTM Pattern"}</span>
+              <span>वास्तविक लिखित परीक्षा ढाँचा (Randomized Exam Practice)</span>
             </div>
-            <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">
-              {t.practiceTitle}
+            <h1 className="text-lg sm:text-xl font-bold text-zinc-900 tracking-tight">
+              अनियमित प्रश्न अभ्यास (Random Practice)
             </h1>
           </div>
 
@@ -193,19 +188,19 @@ function PracticeContent() {
             variant="primary"
             size="sm"
             onClick={handleGenerateNewSet}
-            className="gap-2 font-semibold text-xs rounded-xl self-start sm:self-auto bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+            className="gap-2 font-semibold text-xs rounded-lg self-start sm:self-auto bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
           >
             <Shuffle className="w-3.5 h-3.5" />
-            <span>{t.newRandomSet}</span>
+            <span>नयाँ प्रश्न सेट (New Random Set)</span>
           </Button>
         </div>
 
         {/* Set Size & Category Selector Toolbar */}
-        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-3 border-t border-slate-100 items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 pt-3 border-t border-zinc-100 items-center">
           {/* Set Size Dropdown */}
           <div className="sm:col-span-5">
-            <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-              {t.setSizeLabel}:
+            <label className="block text-[11px] font-semibold text-zinc-500 mb-1">
+              प्रश्न संख्या (Set Size):
             </label>
             <select
               value={setSize}
@@ -213,9 +208,9 @@ function PracticeContent() {
                 setSetSize(parseInt(e.target.value, 10));
                 handleGenerateNewSet();
               }}
-              className="w-full text-xs font-medium bg-white/80 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-xs font-medium bg-zinc-50 border border-zinc-200 rounded-lg px-2.5 py-2 text-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              {setSizeOptions.map((opt) => (
+              {SET_SIZE_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
                   {opt.label}
                 </option>
@@ -225,8 +220,8 @@ function PracticeContent() {
 
           {/* Category Dropdown */}
           <div className="sm:col-span-4">
-            <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-              {t.categoryLabel}:
+            <label className="block text-[11px] font-semibold text-zinc-500 mb-1">
+              विषय छनोट (Category):
             </label>
             <select
               value={selectedSection}
@@ -234,12 +229,12 @@ function PracticeContent() {
                 setSelectedSection(e.target.value);
                 handleGenerateNewSet();
               }}
-              className="w-full text-xs font-medium bg-white/80 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-xs font-medium bg-zinc-50 border border-zinc-200 rounded-lg px-2.5 py-2 text-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="all">{t.allCategories}</option>
+              <option value="all">सबै विषयहरू (६ खण्डहरू)</option>
               {sections.map((s) => (
                 <option key={s.name} value={s.name}>
-                  {translateCategory(s.name)} ({s.count})
+                  {s.name} ({s.count})
                 </option>
               ))}
             </select>
@@ -247,8 +242,8 @@ function PracticeContent() {
 
           {/* Filter Pills */}
           <div className="sm:col-span-3">
-            <label className="block text-[11px] font-semibold text-slate-500 mb-1">
-              {t.statusLabel}:
+            <label className="block text-[11px] font-semibold text-zinc-500 mb-1">
+              अवस्था (Status):
             </label>
             <select
               value={filterType}
@@ -256,25 +251,25 @@ function PracticeContent() {
                 setFilterType(e.target.value as any);
                 handleGenerateNewSet();
               }}
-              className="w-full text-xs font-medium bg-white/80 border border-slate-200 rounded-xl px-2.5 py-2 text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-xs font-medium bg-zinc-50 border border-zinc-200 rounded-lg px-2.5 py-2 text-zinc-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="all">{t.allStatus}</option>
-              <option value="unanswered">{t.unansweredOnly}</option>
-              <option value="incorrect">{t.mistakesOnly}</option>
-              <option value="bookmarked">{t.bookmarkedOnly}</option>
+              <option value="all">सबै प्रश्नहरू (All)</option>
+              <option value="unanswered">नयाँ प्रश्नहरू (New)</option>
+              <option value="incorrect">गलत भएका (Mistakes)</option>
+              <option value="bookmarked">सुरक्षित (Saved)</option>
             </select>
           </div>
         </div>
 
         {/* Question Palette / Mini Navigator (1 to 20 Grid) */}
         {activeQuestionSet.length > 0 && (
-          <div className="pt-2 border-t border-slate-100 space-y-2">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+          <div className="pt-2 border-t border-zinc-100 space-y-2">
+            <div className="flex items-center justify-between text-xs text-zinc-500 font-medium">
               <span>
-                {language === "ne" ? "सेट प्रगति:" : "Set Progress:"} <strong>{answeredInSession}</strong> / {activeQuestionSet.length}
+                सेट प्रगति: <strong>{answeredInSession}</strong> / {activeQuestionSet.length} हल गरियो
               </span>
               <span className="text-blue-600 font-semibold font-sans">
-                {correctInSession} {language === "ne" ? "सही" : "correct"} ({sessionPercentage}%)
+                {correctInSession} सही ({sessionPercentage}%)
               </span>
             </div>
 
@@ -282,11 +277,12 @@ function PracticeContent() {
               {activeQuestionSet.map((q, idx) => {
                 const isCurrent = idx === currentIndex;
                 const status = sessionResults[q.number];
+                const isSaved = isBookmarked(q.number);
 
-                let itemClass = "bg-white/80 text-slate-700 border-slate-200 hover:bg-white";
+                let itemClass = "bg-zinc-100 text-zinc-700 border-zinc-200 hover:bg-zinc-200";
 
                 if (isCurrent) {
-                  itemClass = "bg-blue-600 text-white border-blue-600 ring-2 ring-blue-300 font-bold shadow-sm";
+                  itemClass = "bg-blue-600 text-white border-blue-600 ring-2 ring-blue-300 font-bold";
                 } else if (status === true) {
                   itemClass = "bg-emerald-50 text-emerald-800 border-emerald-300 font-semibold";
                 } else if (status === false) {
@@ -301,7 +297,7 @@ function PracticeContent() {
                       "w-7 h-7 rounded-lg text-xs font-medium border flex items-center justify-center transition-all shrink-0",
                       itemClass
                     )}
-                    title={`Question ${idx + 1}`}
+                    title={`प्रश्न नं. ${q.number} मा जानुहोस्`}
                   >
                     {idx + 1}
                   </button>
@@ -312,27 +308,27 @@ function PracticeContent() {
         )}
       </div>
 
-      {/* Set Completed Banner */}
+      {/* Set Completed Banner (Appears when all questions in this random set are answered) */}
       {isSetCompleted && (
-        <div className="liquid-glass-card rounded-2xl p-5 space-y-3 font-devanagari">
+        <div className="bg-white rounded-xl border border-zinc-200 p-5 shadow-sm space-y-3 font-devanagari">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2.5">
               <div
                 className={cn(
-                  "w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-sm",
+                  "w-10 h-10 rounded-lg flex items-center justify-center text-white",
                   isSessionPassed ? "bg-emerald-600" : "bg-rose-600"
                 )}
               >
                 {isSessionPassed ? <CheckCircle2 className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
               </div>
               <div>
-                <h3 className="font-bold text-slate-900 text-sm sm:text-base">
-                  {isSessionPassed ? t.setCompletePass : t.setCompleteFail} ({sessionPercentage}%)
+                <h3 className="font-bold text-zinc-900 text-sm sm:text-base">
+                  {isSessionPassed
+                    ? `बधाई छ! यस सेटमा तपाईं उत्तीर्ण हुनुभयो (${sessionPercentage}%)`
+                    : `यस सेटमा थप अभ्यास आवश्यक छ (${sessionPercentage}%)`}
                 </h3>
-                <p className="text-xs text-slate-500">
-                  {language === "ne"
-                    ? `कुल ${activeQuestionSet.length} प्रश्नहरू मध्ये ${correctInSession} सही उत्तर। उत्तीर्ण मापदण्ड: ५०%।`
-                    : `Scored ${correctInSession} of ${activeQuestionSet.length} correct. Passing requirement: 50%.`}
+                <p className="text-xs text-zinc-500">
+                  कुल {activeQuestionSet.length} प्रश्नहरू मध्ये {correctInSession} सही उत्तर। उत्तीर्ण मापदण्ड: ५०%।
                 </p>
               </div>
             </div>
@@ -341,10 +337,10 @@ function PracticeContent() {
               variant="primary"
               size="sm"
               onClick={handleGenerateNewSet}
-              className="gap-1.5 rounded-xl text-xs font-semibold shrink-0 bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+              className="gap-1.5 rounded-lg text-xs font-semibold shrink-0 bg-blue-600 hover:bg-blue-700 text-white"
             >
               <RotateCcw className="w-3.5 h-3.5" />
-              <span>{t.nextSetBtn}</span>
+              <span>अर्को सेट लिनुहोस्</span>
             </Button>
           </div>
         </div>
@@ -352,17 +348,17 @@ function PracticeContent() {
 
       {/* Main Question Card or Empty State */}
       {activeQuestionSet.length === 0 ? (
-        <div className="liquid-glass-card rounded-2xl p-10 text-center space-y-3 font-devanagari">
-          <HelpCircle className="w-10 h-10 text-slate-300 mx-auto" />
-          <h3 className="text-base font-bold text-slate-800">
-            {language === "ne" ? "कुनै प्रश्न फेला परेन" : "No questions found matching criteria"}
+        <div className="bg-white rounded-xl border border-zinc-200 p-10 text-center shadow-sm space-y-3 font-devanagari">
+          <HelpCircle className="w-10 h-10 text-zinc-300 mx-auto" />
+          <h3 className="text-base font-bold text-zinc-800">
+            यस फिल्टरमा कुनै प्रश्न फेला परेन
           </h3>
-          <p className="text-xs text-slate-500 max-w-sm mx-auto leading-relaxed">
+          <p className="text-xs text-zinc-500 max-w-sm mx-auto leading-relaxed">
             {filterType === "incorrect"
-              ? (language === "ne" ? "बधाई छ! यस वर्गमा कुनै पनि गलत उत्तर बाँकी छैन।" : "Great job! You have no recorded incorrect answers here.")
+              ? "बधाई छ! यस वर्गमा तपाईंको कुनै पनि गलत उत्तर बाँकी छैन।"
               : filterType === "bookmarked"
-              ? (language === "ne" ? "तपाईंले कुनै पनि प्रश्न सुरक्षित गर्नुभएको छैन।" : "No bookmarked questions in this category.")
-              : (language === "ne" ? "फिल्टर रिसेट गरी पुनः प्रयास गर्नुहोस्।" : "Reset filters to view all questions.")}
+              ? "तपाईंले यस वर्गमा कुनै पनि प्रश्न सुरक्षित गर्नुभएको छैन।"
+              : "कृपया अन्य वर्ग छनोट गर्नुहोस् वा फिल्टर रिसेट गर्नुहोस्।"}
           </p>
           <Button
             variant="outline"
@@ -372,9 +368,9 @@ function PracticeContent() {
               setSelectedSection("all");
               handleGenerateNewSet();
             }}
-            className="rounded-xl text-xs font-semibold"
+            className="rounded-lg text-xs font-semibold"
           >
-            {language === "ne" ? "सबै प्रश्नहरू देखाउनुहोस्" : "Reset Filters"}
+            सबै प्रश्नहरू देखाउनुहोस्
           </Button>
         </div>
       ) : currentQuestion ? (
@@ -389,26 +385,26 @@ function PracticeContent() {
           />
 
           {/* Navigation Controls Footer */}
-          <div className="liquid-glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3 font-devanagari">
+          <div className="bg-white rounded-xl border border-zinc-200 shadow-sm p-3.5 flex items-center justify-between gap-3 font-devanagari">
             <Button
               variant="outline"
               size="sm"
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              className="gap-1.5 rounded-xl text-xs font-semibold"
+              className="gap-1.5 rounded-lg text-xs font-semibold"
             >
               <ChevronLeft className="w-4 h-4" />
-              <span>{t.previousBtn}</span>
+              <span>अघिल्लो (Previous)</span>
             </Button>
 
             <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-slate-700">
-                {language === "ne" ? "सेट प्रश्न" : "Question"} {currentIndex + 1} / {activeQuestionSet.length}
+              <span className="text-xs font-semibold text-zinc-700">
+                सेट प्रश्न {currentIndex + 1} / {activeQuestionSet.length}
               </span>
               <button
                 onClick={handleGenerateNewSet}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
-                title={t.newRandomSet}
+                className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors"
+                title="नयाँ सेट सुरु गर्नुहोस्"
               >
                 <Shuffle className="w-3.5 h-3.5" />
               </button>
@@ -419,9 +415,9 @@ function PracticeContent() {
               size="sm"
               onClick={handleNext}
               disabled={currentIndex >= activeQuestionSet.length - 1}
-              className="gap-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white"
+              className="gap-1.5 rounded-lg text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-white"
             >
-              <span>{t.nextBtn}</span>
+              <span>पछिल्लो (Next)</span>
               <ChevronRight className="w-4 h-4" />
             </Button>
           </div>
@@ -435,8 +431,8 @@ export default function PracticePage() {
   return (
     <Suspense
       fallback={
-        <div className="p-12 text-center text-slate-500 font-medium">
-          Loading practice session...
+        <div className="p-12 text-center text-zinc-500 font-medium">
+          अभ्यास सत्र लोड हुँदैछ...
         </div>
       }
     >

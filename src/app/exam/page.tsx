@@ -12,7 +12,6 @@ import { ExamPalette } from "@/components/exam/ExamPalette";
 import { ExamSummaryModal } from "@/components/exam/ExamSummaryModal";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
-import { useLanguage } from "@/context/LanguageContext";
 import {
   Award,
   ChevronLeft,
@@ -28,8 +27,6 @@ import {
   Sparkles,
   HelpCircle,
   AlertTriangle,
-  Shield,
-  FileCheck,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -43,7 +40,6 @@ interface ActiveExamPayload {
 
 export default function ExamPage() {
   const router = useRouter();
-  const { language, t, translateCategory, translateKey } = useLanguage();
 
   const [activeSession, setActiveSession] = useState<ActiveExamPayload | null>(null);
   const [selectedPresetId, setSelectedPresetId] = useState<string>("standard");
@@ -178,12 +174,11 @@ export default function ExamPage() {
 
   // Abandon exam
   const handleCancelActiveExam = () => {
-    const confirmMsg =
-      language === "ne"
-        ? "के तपाईं यो परीक्षा रद्द गर्न चाहनुहुन्छ? तपाईंको प्रगति सुरक्षित हुने छैन।"
-        : "Are you sure you want to abandon this exam? Progress will not be saved.";
-
-    if (window.confirm(confirmMsg)) {
+    if (
+      window.confirm(
+        "के तपाईं यो परीक्षा रद्द गर्न चाहनुहुन्छ? तपाईंको अहिलेसम्मको प्रगति सुरक्षित हुने छैन।"
+      )
+    ) {
       clearActiveExam();
       setActiveSession(null);
     }
@@ -230,24 +225,24 @@ export default function ExamPage() {
     return (
       <PageContainer size="narrow" className="space-y-6 font-devanagari">
         <div className="text-center max-w-xl mx-auto space-y-2 pt-2">
-          <div className="w-12 h-12 rounded-2xl bg-blue-600 text-white mx-auto flex items-center justify-center shadow-sm">
-            <Award className="w-6 h-6 text-amber-300" />
+          <div className="w-12 h-12 rounded-xl bg-zinc-900 text-white mx-auto flex items-center justify-center shadow-sm">
+            <Award className="w-6 h-6 text-amber-400" />
           </div>
-          <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
-            {t.examTitle}
+          <h1 className="text-xl sm:text-2xl font-bold text-zinc-900 tracking-tight">
+            ड्राइभिङ लाइसेन्स नमुना परीक्षा (Mock Exam)
           </h1>
-          <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md mx-auto">
-            {t.examSubtitle}
+          <p className="text-xs sm:text-sm text-zinc-600 leading-relaxed max-w-md mx-auto">
+            यातायात व्यवस्था विभागको आधिकारिक वर्ग ‘क’ (Motorcycle) र ‘ट’ (Scooter) लिखित परीक्षाको वास्तविक सिमुलेसन।
           </p>
         </div>
 
-        {/* Examination Presets in Liquid Glass Card */}
-        <div className="liquid-glass-card rounded-2xl p-5 sm:p-7 space-y-5">
+        {/* Examination Presets */}
+        <div className="bg-white rounded-xl border border-zinc-200 p-5 sm:p-7 space-y-5 shadow-sm">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-wider">
-              {language === "ne" ? "परीक्षा मोड छनोट गर्नुहोस्" : "Select Examination Preset"}
+            <h2 className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
+              परीक्षा प्रकार छनोट गर्नुहोस्
             </h2>
-            <span className="text-xs font-semibold text-blue-600">DOTM Standard Curriculum</span>
+            <span className="text-xs font-semibold text-blue-600">DOTM आधिकारिक पाठ्यक्रम</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -260,53 +255,45 @@ export default function ExamPage() {
                   className={cn(
                     "p-4 rounded-xl border transition-all cursor-pointer flex flex-col justify-between select-none relative group",
                     isSelected
-                      ? "liquid-glass-accent border-blue-500 ring-2 ring-blue-500/20 shadow-sm"
-                      : "bg-white/80 border-slate-200 hover:border-slate-300"
+                      ? "border-blue-600 bg-blue-50/50 shadow-sm ring-1 ring-blue-500/30"
+                      : "border-zinc-200 hover:border-zinc-300 bg-white"
                   )}
                 >
                   {preset.id === "standard" && (
                     <div className="absolute -top-2.5 left-3 px-2 py-0.5 rounded-full bg-blue-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                      {language === "ne" ? "आधिकारिक ढाँचा" : "Recommended"}
+                      आधिकारिक ढाँचा
                     </div>
                   )}
 
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm leading-snug">
-                      {language === "ne"
-                        ? preset.title?.split("(")[0]
-                        : preset.id === "standard"
-                        ? "Official Standard Mock Test"
-                        : preset.id === "quick"
-                        ? "Quick 10-Question Sprint"
-                        : "Comprehensive Drill"}
+                    <h3 className="font-bold text-zinc-900 text-sm leading-snug">
+                      {preset.title?.split("(")[0]}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-zinc-500 mt-0.5">
                       {preset.title?.includes("(")
                         ? `(${preset.title.split("(")[1]}`
                         : ""}
                     </p>
 
-                    <div className="mt-3 space-y-1 text-xs text-slate-600">
+                    <div className="mt-3 space-y-1 text-xs text-zinc-600">
                       <div className="flex items-center gap-1.5">
                         <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
-                        <span><strong>{preset.questionCount}</strong> {language === "ne" ? "प्रश्नहरू" : "Questions"}</span>
+                        <span><strong>{preset.questionCount}</strong> बहुवैकल्पिक प्रश्नहरू</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <Timer className="w-3.5 h-3.5 text-amber-600" />
-                        <span><strong>{preset.timeLimitMinutes}</strong> {language === "ne" ? "मिनेट समय" : "Minutes"}</span>
+                        <span><strong>{preset.timeLimitMinutes}</strong> मिनेट समय</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                        <span>{language === "ne" ? "उत्तीर्ण:" : "Pass:"} <strong>{preset.passingPercentage}%</strong></span>
+                        <span>उत्तीर्ण: <strong>{preset.passingPercentage}%</strong> अङ्क</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="mt-4 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs font-semibold">
-                    <span className={isSelected ? "text-blue-600 font-bold" : "text-slate-500"}>
-                      {isSelected
-                        ? (language === "ne" ? "छनोट गरिएको" : "Selected")
-                        : (language === "ne" ? "छनोट गर्नुहोस्" : "Select")}
+                  <div className="mt-4 pt-2.5 border-t border-zinc-100 flex items-center justify-between text-xs font-semibold">
+                    <span className={isSelected ? "text-blue-600" : "text-zinc-500"}>
+                      {isSelected ? "छनोट गरिएको" : "छनोट गर्नुहोस्"}
                     </span>
                     <input
                       type="radio"
@@ -322,23 +309,23 @@ export default function ExamPage() {
           </div>
 
           {/* Exam Rules & Instructions */}
-          <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-2 text-xs text-slate-700">
-            <div className="font-bold text-slate-900 flex items-center gap-1.5">
+          <div className="p-4 bg-zinc-50 rounded-xl border border-zinc-200 space-y-2 text-xs text-zinc-700">
+            <div className="font-bold text-zinc-900 flex items-center gap-1.5">
               <ShieldCheck className="w-4 h-4 text-blue-600" />
-              <span>{language === "ne" ? "परीक्षा निर्देशन तथा नियमहरू:" : "Examination Guidelines & Rules:"}</span>
+              <span>परीक्षा निर्देशन तथा नियमहरू:</span>
             </div>
-            <ul className="list-disc list-inside space-y-1 text-slate-600 pl-1">
-              <li>{language === "ne" ? "परीक्षा सुरु भएपछि ३० मिनेटको घडी निरन्तर चल्नेछ।" : "The 30-minute timer will run continuously once started."}</li>
-              <li>{language === "ne" ? "कुनै पनि प्रश्न बाँकी राख्न वा पछि समीक्षा गर्नका लागि 'Flag' गर्न सकिन्छ।" : "You can flag tricky questions for later review using the Flag button."}</li>
-              <li>{language === "ne" ? "समय समाप्त भएपछि परीक्षा स्वतः बुझाइनेछ र नतिजा तत्काल प्रदर्शित हुनेछ।" : "The exam will auto-submit when the countdown expires."}</li>
-              <li>{language === "ne" ? "प्रत्येक प्रश्नको उत्तर विकल्पहरू निष्पक्षताका लागि अनियमित क्रममा राखिएका हुन्छन्।" : "Option orders are randomized for authentic examination simulation."}</li>
+            <ul className="list-disc list-inside space-y-1 text-zinc-600 pl-1">
+              <li>परीक्षा सुरु भएपछि ३० मिनेटको घडी निरन्तर चल्नेछ।</li>
+              <li>कुनै पनि प्रश्न बाँकी राख्न वा पछि समीक्षा गर्नका लागि &apos;Flag&apos; गर्न सकिन्छ।</li>
+              <li>समय समाप्त भएपछि परीक्षा स्वतः बुझाइनेछ र नतिजा तत्काल प्रदर्शित हुनेछ।</li>
+              <li>प्रत्येक प्रश्नको उत्तर विकल्पहरू निष्पक्षताका लागि अनियमित क्रममा राखिएका हुन्छन्।</li>
             </ul>
           </div>
 
           {/* Start CTA */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
-            <div className="text-xs text-slate-500 font-medium">
-              {language === "ne" ? "तयारी पूरा भएपछि मात्र परीक्षा सुरु गर्नुहोस्।" : "Ready to test your driving knowledge? Start when prepared."}
+            <div className="text-xs text-zinc-500 font-medium">
+              तयारी पूरा भएपछि मात्र परीक्षा सुरु गर्नुहोस्।
             </div>
             <Button
               variant="primary"
@@ -349,10 +336,10 @@ export default function ExamPage() {
                   DEFAULT_EXAM_CONFIGS[0];
                 handleStartExam(selected);
               }}
-              className="w-full sm:w-auto px-6 font-semibold rounded-xl shadow-sm gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+              className="w-full sm:w-auto px-6 font-semibold rounded-lg shadow-sm gap-2 bg-blue-600 hover:bg-blue-700 text-white"
             >
               <Play className="w-4 h-4 fill-current" />
-              <span>{t.startExamBtn}</span>
+              <span>परीक्षा सुरु गर्नुहोस् (Start Exam)</span>
             </Button>
           </div>
         </div>
@@ -370,7 +357,7 @@ export default function ExamPage() {
   const unansweredCount = totalQuestions - answeredCount;
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50/70 font-devanagari">
+    <div className="min-h-screen flex flex-col bg-zinc-50 font-devanagari">
       {/* Sticky Header with Timer & Submit */}
       <ExamHeader
         title={activeSession.config.title || "सवारी चालक अनुमतिपत्र नमुना परीक्षा"}
@@ -385,21 +372,21 @@ export default function ExamPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
           {/* Main Question Card (lg:col-span-8) */}
           <div className="lg:col-span-8 space-y-4">
-            <div className="liquid-glass-card rounded-2xl p-5 sm:p-7 space-y-5">
+            <div className="bg-white rounded-xl border border-zinc-200 shadow-sm p-5 sm:p-7 space-y-5">
               {/* Question Meta */}
-              <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-3">
+              <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-xs sm:text-sm px-2.5 py-0.5 rounded-lg bg-blue-600 text-white">
-                    {language === "ne" ? "प्रश्न" : "Q"} {activeSession.currentIndex + 1} / {totalQuestions}
+                  <span className="font-bold text-xs sm:text-sm px-2.5 py-0.5 rounded-lg bg-zinc-900 text-white">
+                    प्रश्न {activeSession.currentIndex + 1} / {totalQuestions}
                   </span>
-                  <Badge variant="info">{translateCategory(currentQ.section)}</Badge>
+                  <Badge variant="info">{currentQ.section}</Badge>
                 </div>
 
                 <div className="flex items-center gap-2">
                   {/* Mobile Palette Toggle */}
                   <button
                     onClick={() => setMobilePaletteOpen(!mobilePaletteOpen)}
-                    className="lg:hidden p-1.5 rounded-lg text-slate-600 liquid-glass-pill text-xs font-semibold flex items-center gap-1.5"
+                    className="lg:hidden p-1.5 rounded-lg text-zinc-600 bg-zinc-100 hover:bg-zinc-200 text-xs font-semibold flex items-center gap-1.5"
                     title="View Palette"
                   >
                     <LayoutGrid className="w-4 h-4" />
@@ -410,25 +397,25 @@ export default function ExamPage() {
                   <button
                     onClick={handleToggleFlag}
                     className={cn(
-                      "flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-semibold border transition-all active:scale-95",
+                      "flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold border transition-all active:scale-95",
                       currentQ.isFlagged
-                        ? "bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-300 font-bold"
-                        : "liquid-glass-pill text-slate-600"
+                        ? "bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-300"
+                        : "bg-white text-zinc-600 border-zinc-200 hover:bg-zinc-50"
                     )}
                   >
                     <Flag
                       className={cn(
                         "w-3.5 h-3.5",
-                        currentQ.isFlagged ? "fill-current text-amber-500" : "text-slate-400"
+                        currentQ.isFlagged ? "fill-current text-amber-500" : "text-zinc-400"
                       )}
                     />
-                    <span>{currentQ.isFlagged ? t.flagged : t.flagForLater}</span>
+                    <span>{currentQ.isFlagged ? "Flagged" : "Flag for Later"}</span>
                   </button>
                 </div>
               </div>
 
               {/* Question Text */}
-              <div className="text-base sm:text-xl font-bold text-slate-900 leading-relaxed font-devanagari">
+              <div className="text-base sm:text-xl font-bold text-zinc-900 leading-relaxed font-devanagari">
                 {currentQ.question}
               </div>
 
@@ -436,8 +423,6 @@ export default function ExamPage() {
               <div className="space-y-2.5 pt-1">
                 {currentQ.options.map((opt) => {
                   const isSelected = currentQ.userSelectedKey === opt.key;
-                  const dualKey = language === "en" ? `${translateKey(opt.key)} (${opt.key})` : opt.key;
-
                   return (
                     <button
                       key={opt.key}
@@ -445,19 +430,19 @@ export default function ExamPage() {
                       className={cn(
                         "w-full text-left p-3.5 rounded-xl border transition-all flex items-start gap-3 select-none group active:scale-[0.99] focus:outline-none focus:ring-2 focus:ring-blue-500",
                         isSelected
-                          ? "liquid-glass-accent border-blue-500 ring-1 ring-blue-500/30 text-blue-950 font-bold shadow-sm"
-                          : "bg-white/80 border-slate-200 hover:border-slate-300 hover:bg-white text-slate-800"
+                          ? "border-blue-600 bg-blue-50/60 ring-1 ring-blue-500/30 text-blue-950 font-bold shadow-sm"
+                          : "border-zinc-200 bg-white hover:border-zinc-300 hover:bg-zinc-50 text-zinc-800"
                       )}
                     >
                       <div
                         className={cn(
-                          "min-w-7 h-7 px-1.5 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 transition-colors",
+                          "w-7 h-7 rounded-lg font-bold text-xs flex items-center justify-center shrink-0 border mt-0.5 transition-colors",
                           isSelected
                             ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                            : "bg-slate-100 text-slate-700 border-slate-200 group-hover:border-slate-300"
+                            : "bg-zinc-100 text-zinc-700 border-zinc-200 group-hover:border-zinc-300"
                         )}
                       >
-                        {dualKey}
+                        {opt.key}
                       </div>
                       <div className="flex-1 font-medium leading-relaxed pt-0.5 text-sm sm:text-base font-devanagari">
                         {opt.text}
@@ -472,33 +457,33 @@ export default function ExamPage() {
                 <div className="flex justify-end pt-1">
                   <button
                     onClick={() => handleSelectOption(currentQ.userSelectedKey!)}
-                    className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+                    className="text-xs text-zinc-400 hover:text-zinc-600 transition-colors"
                   >
-                    {t.clearSelection}
+                    छनोट हटाउनुहोस् (Clear selection)
                   </button>
                 </div>
               )}
             </div>
 
             {/* Navigation Footer */}
-            <div className="liquid-glass-card rounded-2xl p-3.5 flex items-center justify-between gap-3">
+            <div className="bg-white rounded-xl border border-zinc-200 shadow-sm p-3.5 flex items-center justify-between gap-3">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={handlePrev}
                 disabled={activeSession.currentIndex === 0}
-                className="gap-1.5 rounded-xl text-xs font-semibold"
+                className="gap-1.5 rounded-lg text-xs font-semibold"
               >
                 <ChevronLeft className="w-4 h-4" />
-                <span>{t.previousBtn}</span>
+                <span>अघिल्लो (Previous)</span>
               </Button>
 
               <button
                 onClick={handleCancelActiveExam}
-                className="text-xs text-slate-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-medium"
+                className="text-xs text-zinc-400 hover:text-rose-600 transition-colors flex items-center gap-1 font-medium"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>{t.abandonExamBtn}</span>
+                <span>परीक्षा रद्द गर्नुहोस्</span>
               </button>
 
               <Button
@@ -506,9 +491,9 @@ export default function ExamPage() {
                 size="sm"
                 onClick={handleNext}
                 disabled={activeSession.currentIndex >= totalQuestions - 1}
-                className="gap-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white"
+                className="gap-1.5 rounded-lg text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 text-white"
               >
-                <span>{t.nextBtn}</span>
+                <span>पछिल्लो (Next)</span>
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </div>
@@ -523,18 +508,18 @@ export default function ExamPage() {
             />
 
             {/* Submit Box */}
-            <div className="liquid-glass-card rounded-2xl p-4 space-y-3">
-              <div className="text-xs text-slate-600 space-y-1">
+            <div className="bg-white rounded-xl border border-zinc-200 p-4 shadow-sm space-y-3">
+              <div className="text-xs text-zinc-600 space-y-1">
                 <div className="flex justify-between">
-                  <span>{t.answeredCount}:</span>
+                  <span>हल गरिएका प्रश्न:</span>
                   <strong className="text-emerald-700 font-bold">{answeredCount}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>{t.unansweredCount}:</span>
-                  <strong className="text-slate-700 font-bold">{unansweredCount}</strong>
+                  <span>बाँकी प्रश्न:</span>
+                  <strong className="text-zinc-700 font-bold">{unansweredCount}</strong>
                 </div>
                 <div className="flex justify-between">
-                  <span>{t.flaggedCount}:</span>
+                  <span>Flag गरिएका:</span>
                   <strong className="text-amber-700 font-bold">{flaggedCount}</strong>
                 </div>
               </div>
@@ -543,9 +528,9 @@ export default function ExamPage() {
                 variant="primary"
                 size="sm"
                 onClick={() => setShowSummaryModal(true)}
-                className="w-full font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-sm"
+                className="w-full font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white"
               >
-                {t.submitExamBtn}
+                परीक्षा बुझाउनुहोस् (Submit Exam)
               </Button>
             </div>
           </div>
@@ -557,12 +542,12 @@ export default function ExamPage() {
         <div className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-end">
           <div className="bg-white w-full rounded-t-2xl p-5 max-h-[80vh] overflow-y-auto space-y-4 animate-in slide-in-from-bottom">
             <div className="flex items-center justify-between border-b pb-2">
-              <h3 className="font-bold text-sm text-slate-900">{t.examGrid}</h3>
+              <h3 className="font-bold text-sm text-zinc-900">प्रश्न नेभिगेटर (Palette)</h3>
               <button
                 onClick={() => setMobilePaletteOpen(false)}
-                className="text-xs font-bold text-slate-500 p-1"
+                className="text-xs font-bold text-zinc-500 p-1"
               >
-                {language === "ne" ? "बन्द गर्नुहोस्" : "Close"}
+                बन्द गर्नुहोस्
               </button>
             </div>
             <ExamPalette

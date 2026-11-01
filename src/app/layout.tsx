@@ -3,7 +3,6 @@ import "@/styles/globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
-import { LanguageProvider } from "@/context/LanguageContext";
 
 export const metadata: Metadata = {
   title: "LicensePrep — Nepal Driving License Written Exam Preparation",
@@ -31,12 +30,10 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       </head>
       <body className="flex flex-col min-h-screen bg-slate-50 text-slate-900 font-sans antialiased pb-16 md:pb-0">
-        <LanguageProvider>
-          <Navbar />
-          {children}
-          <Footer />
-          <MobileBottomNav />
-        </LanguageProvider>
+        <Navbar />
+        {children}
+        <Footer />
+        <MobileBottomNav />
       </body>
     </html>
   );
